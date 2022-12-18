@@ -9,6 +9,7 @@
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       ai-writer
+ * Update URI:        https://api.github.com/repos/code-flow/aiwriter/releases/latest
  *
  * @package           ai_writer
  */
@@ -315,4 +316,53 @@ function cryptoHelper( string $data, string $direction = 'encrypt' ): string {
 
 		return $data;
 	}
+}
+
+add_filter( 'update_plugins_api.github.com', 'wpbuddy\ai_writer\checkPluginUpdate', 10, 2 );
+
+function checkPluginUpdate( $toUpdate, $pluginData ) {
+	static $latestVersion = null;
+
+	if ( $toUpdate ) {
+		return $toUpdate;
+	}
+
+	if ( false === stripos( $pluginData['UpdateURI'], 'code-flow/aiwriter' ) ) {
+		return $toUpdate;
+	}
+
+	if ( ! $latestVersion ) {
+
+		$response = wp_remote_get( $pluginData['UpdateURI'] );
+
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+
+		try {
+			$json = json_decode( $body, null, 512, JSON_THROW_ON_ERROR );
+		} catch ( Exception $e ) {
+			return false;
+		}
+
+		if ( ! isset( $json->tag_name ) ) {
+			return false;
+		}
+
+		$latestVersion = sanitize_text_field( $json->tag_name );
+	}
+
+	if ( ! version_compare( $latestVersion, $pluginData['Version'], '>' ) ) {
+		return false;
+	}
+
+	return [
+		'id'      => $pluginData['UpdateURI'],
+		'slug'    => plugin_basename( __FILE__ ),
+		'version' => $latestVersion,
+		'package' => 'https://github.com/code-flow/aiwriter/releases/latest/download/ai-writer.zip',
+
+	];
 }
