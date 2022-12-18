@@ -320,6 +320,13 @@ function cryptoHelper( string $data, string $direction = 'encrypt' ): string {
 
 add_filter( 'update_plugins_api.github.com', 'wpbuddy\ai_writer\checkPluginUpdate', 10, 2 );
 
+/**
+ * @param array|bool $toUpdate
+ * @param array $pluginData
+ *
+ * @return array|bool
+ * @since 0.2.0
+ */
 function checkPluginUpdate( $toUpdate, $pluginData ) {
 	static $latestVersion = null;
 
