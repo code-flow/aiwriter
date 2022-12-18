@@ -393,16 +393,23 @@ function pluginInformation( $result, string $action, object $args ) {
 		return $result;
 	}
 
+	$latestData = checkPluginUpdate( false, [ 'UpdateURI' => 'code-flow/aiwriter', 'Version' => '0.1.0' ] );
+
+	$latestVersion = is_array( $latestData ) && array_key_exists( 'version', $latestData ) ? $latestData['version'] : '';
+
 	return (object) [
 		'name'           => 'AiWriter',
 		'slug'           => plugin_basename( __FILE__ ),
-		'version'        => '',
+		'version'        => $latestVersion,
 		'author'         => '<a href="https://aiwriter.space">AiWriter.space</a>',
 		'author_profile' => 'https://profiles.wordpress.org/floriansimeth/',
 		'homepage'       => 'https://aiwriter.space',
 		'download_link'  => 'https://github.com/code-flow/aiwriter/releases/latest/download/ai-writer.zip',
 		'sections'       => [
-			'changelog'    => 'The <a href="https://github.com/code-flow/aiwriter/commits/main" target="_blank">changelog</a> can be found on Github.'
+			'changelog' => sprintf(
+				'The <a href="https://github.com/code-flow/aiwriter/commits/0.2.0/%s" target="_blank">changelog</a> can be found on Github.',
+				$latestVersion
+			)
 		],
 	];
 }
