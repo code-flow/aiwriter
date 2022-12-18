@@ -4,7 +4,7 @@
  * Description:       When the AI completes your sentence... Register at https://aiwriter.space to use this plugin! Thanks.
  * Requires at least: 6.1.0
  * Requires PHP:      8.0.0
- * Version:           0.1.0
+ * Version:           0.2.0
  * Author:            floriansimeth
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
