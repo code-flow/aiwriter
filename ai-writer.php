@@ -366,3 +366,36 @@ function checkPluginUpdate( $toUpdate, $pluginData ) {
 
 	];
 }
+
+add_filter( 'plugins_api', 'wpbuddy\ai_writer\pluginInformation', 10, 3 );
+
+/**
+ * @param bool|object|array $result
+ * @param string $action
+ * @param object $args
+ *
+ * @return bool|object|array
+ * @since 0.2.0
+ */
+function pluginInformation( $result, string $action, object $args ) {
+	if ( 'plugin_information' !== $action ) {
+		return $result;
+	}
+
+	if ( $args->slug !== plugin_basename( __FILE__ ) ) {
+		return $result;
+	}
+
+	return (object) [
+		'name'           => 'AiWriter',
+		'slug'           => plugin_basename( __FILE__ ),
+		'version'        => '',
+		'author'         => '<a href="https://aiwriter.space">AiWriter.space</a>',
+		'author_profile' => 'https://profiles.wordpress.org/floriansimeth/',
+		'homepage'       => 'https://aiwriter.space',
+		'download_link'  => 'https://github.com/code-flow/aiwriter/releases/latest/download/ai-writer.zip',
+		'sections'       => [
+			'changelog'    => 'The <a href="https://github.com/code-flow/aiwriter/commits/main" target="_blank">changelog</a> can be found on Github.'
+		],
+	];
+}
