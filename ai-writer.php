@@ -8,7 +8,7 @@
  * Author:            floriansimeth
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       ai-writer
+ * Text Domain:       aiwriter
  * Update URI:        https://api.github.com/repos/code-flow/aiwriter/releases/latest
  *
  * @package           ai_writer
