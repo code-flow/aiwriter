@@ -64,7 +64,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 	} catch ( Exception $e ) {
 		return new WP_Error(
 			'ai-writer-gpt-rest-crypto-error',
-			sprintf( __( 'Could not decrypt your activation code. Got error: %s', 'ai-writer' ), $e->getMessage() ),
+			sprintf( __( 'Could not decrypt your activation code. Got error: %s', 'aiwriter' ), $e->getMessage() ),
 		);
 	}
 
@@ -111,7 +111,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 			return new WP_Error(
 				'ai-writer-gpt-response-status-code',
 				sprintf(
-					__( 'Could not fetch data from API (wrong status code) with error: %s (%d)', 'ai-writer' ),
+					__( 'Could not fetch data from API (wrong status code) with error: %s (%d)', 'aiwriter' ),
 					$body->data->message,
 					$body->data->code,
 				),
@@ -121,7 +121,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 
 		return new WP_Error(
 			'ai-writer-gpt-response-status-code',
-			__( 'Could not fetch data from API (wrong status code).', 'ai-writer' ),
+			__( 'Could not fetch data from API (wrong status code).', 'aiwriter' ),
 			$response
 		);
 	}
@@ -306,7 +306,7 @@ function cryptoHelper( string $data, string $direction = 'encrypt' ): string {
 		if ( isset( $decryptedData ) ) {
 			if ( false === $decryptedData ) {
 				throw new Exception(
-					__( 'Cannot decrypt.', 'ai-writer' ),
+					__( 'Cannot decrypt.', 'aiwriter' ),
 					1
 				);
 			}

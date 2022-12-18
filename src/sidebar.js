@@ -68,12 +68,12 @@ const AiWriterSidebar = () => {
 	return (<>
 			<PluginSidebarMoreMenuItem
 				target="aiwriter-sidebar" icon={AiWriterIcon()}>
-				{__('AiWriter settings', 'ai-writer')}
+				{__('AiWriter settings', 'aiwriter')}
 			</PluginSidebarMoreMenuItem>
 			<PluginSidebar
 				name="aiwriter-sidebar"
-				title={__('AiWriter settings', 'ai-writer')} icon={AiWriterIcon()}>
-				<PanelBody title={__('Text generation settings', 'ai-writer')}>
+				title={__('AiWriter settings', 'aiwriter')} icon={AiWriterIcon()}>
+				<PanelBody title={__('Text generation settings', 'aiwriter')}>
 					<p>
 						<FormToggle
 							checked={isAiOn}
@@ -83,10 +83,10 @@ const AiWriterSidebar = () => {
 							}}
 						/>
 						{' '}
-						{__('Activate AiWriter', 'ai-writer')}
+						{__('Activate AiWriter', 'aiwriter')}
 					</p>
 					<RangeControl
-						label={__('Creativity', 'ai-writer')}
+						label={__('Creativity', 'aiwriter')}
 						value={temperature}
 						onChange={value => {
 							setTemperature(value);
@@ -98,24 +98,24 @@ const AiWriterSidebar = () => {
 						withInputField={false}
 						renderTooltipContent={value => {
 							if (value <= 0) {
-								return __('Not creative at all', 'ai-writer')
+								return __('Not creative at all', 'aiwriter')
 							}
 
 							if (value >= 0.8) {
-								return __('Very creative', 'ai-writer')
+								return __('Very creative', 'aiwriter')
 							}
 
 							if (value >= 0.5) {
-								return __('Reasonably creative', 'ai-writer')
+								return __('Reasonably creative', 'aiwriter')
 							}
 
 							if (value < 0.5) {
-								return __('Rather less creative', 'ai-writer')
+								return __('Rather less creative', 'aiwriter')
 							}
 						}}
 					/>
 					<RangeControl
-						label={__('Text length', 'ai-writer')}
+						label={__('Text length', 'aiwriter')}
 						value={maxTokens}
 						onChange={value => {
 							setMaxTokens(value);
@@ -125,24 +125,24 @@ const AiWriterSidebar = () => {
 						max={4096}
 						step={1}
 						withInputField={false}
-						help={__('The maximum number of tokens to generate.', 'ai-writer')}
+						help={__('The maximum number of tokens to generate.', 'aiwriter')}
 					/>
 				</PanelBody>
-				<PanelBody title={__('Your subscription', 'ai-writer')} initialOpen={false}
+				<PanelBody title={__('Your subscription', 'aiwriter')} initialOpen={false}
 						   onToggle={getActivationCode}>
 					<TextControl
 						onChange={saveActivationCode}
 						value={activationCode === 'ENCRYPTED' ? '' : activationCode}
 						placeholder={
 							isLoading
-								? __('Loading code ...', 'ai-writer')
-								: activationCode === 'ENCRYPTED' ? __('**encrypted**', 'ai-writer') : 'abcdefghijklmnopqrstuvwxyz='
+								? __('Loading code ...', 'aiwriter')
+								: activationCode === 'ENCRYPTED' ? __('**encrypted**', 'aiwriter') : 'abcdefghijklmnopqrstuvwxyz='
 						}
-						label={__('Activation code', 'ai-writer')} key="activation-code"
+						label={__('Activation code', 'aiwriter')} key="activation-code"
 					/>
 					{activationCode === '' && !isLoading
 						? <p><a href="https://aiwriter.space"
-								target="_blank">{__('Don\'t have an activation code yet? Click here.', 'ai-writer')}</a>
+								target="_blank">{__('Don\'t have an activation code yet? Click here.', 'aiwriter')}</a>
 						</p>
 						: null}
 				</PanelBody>
