@@ -41,6 +41,60 @@ function registerSettings(): void {
 			'default'           => ''
 		]
 	);
+
+	register_meta(
+		'user',
+		'aiwriter_isActive',
+		[
+			'type'              => 'boolean',
+			'description'       => __( 'If AiWriter is active for this user.', 'aiwriter' ),
+			'single'            => true,
+			'default'           => true,
+			'show_in_rest'      => true,
+			'sanitize_callback' => static function ( $val ) {
+				return (bool) $val;
+			},
+			'auth_callback'     => static function () {
+				return is_user_logged_in();
+			},
+		]
+	);
+
+	register_meta(
+		'user',
+		'aiwriter_temperature',
+		[
+			'type'              => 'number',
+			'description'       => __( 'The temperature that was set by the user. Value from 0.0 to 1.0.', 'aiwriter' ),
+			'single'            => true,
+			'default'           => 0.8,
+			'show_in_rest'      => true,
+			'sanitize_callback' => static function ( $val ) {
+				return (float) $val;
+			},
+			'auth_callback'     => static function () {
+				return is_user_logged_in();
+			},
+		]
+	);
+
+	register_meta(
+		'user',
+		'aiwriter_textLength',
+		[
+			'type'              => 'integer',
+			'description'       => __( 'The text length that was set by the user. Value from 200 to 1000.', 'aiwriter' ),
+			'single'            => true,
+			'default'           => 200,
+			'show_in_rest'      => true,
+			'sanitize_callback' => static function ( $val ) {
+				return (int) $val;
+			},
+			'auth_callback'     => static function () {
+				return is_user_logged_in();
+			},
+		]
+	);
 }
 
 add_action( 'rest_api_init', 'wpbuddy\ai_writer\setupRestRoutes' );
@@ -237,12 +291,12 @@ function enqueueBlockEditorScripts(): void {
 	}
 
 	$data = (object) [
-		'isOn'        => true,
+		'isActive'        => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
 		'version'     => $pluginData['Version'],
 		't'           => wp_generate_uuid4(),
 		'apiUrl'      => $apiUrl,
-		'temperature' => 0.8,
-		'maxTokens'   => 16,
+		'temperature' => (float) get_user_meta( get_current_user_id(), 'aiwriter_temperature', true ),
+		'textLength'  => (int) get_user_meta( get_current_user_id(), 'aiwriter_textLength', true ),
 	];
 
 	wp_add_inline_script(
