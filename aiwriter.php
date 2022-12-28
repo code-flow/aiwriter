@@ -54,8 +54,8 @@ function registerSettings(): void {
 			'sanitize_callback' => static function ( $val ) {
 				return (bool) $val;
 			},
-			'auth_callback'     => static function () {
-				return is_user_logged_in();
+			'auth_callback'     => static function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+				return is_user_logged_in() && get_current_user_id() === $user_id;
 			},
 		]
 	);
@@ -72,8 +72,8 @@ function registerSettings(): void {
 			'sanitize_callback' => static function ( $val ) {
 				return (float) $val;
 			},
-			'auth_callback'     => static function () {
-				return is_user_logged_in();
+			'auth_callback'     => static function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+				return is_user_logged_in() && get_current_user_id() === $user_id;
 			},
 		]
 	);
@@ -90,8 +90,8 @@ function registerSettings(): void {
 			'sanitize_callback' => static function ( $val ) {
 				return (int) $val;
 			},
-			'auth_callback'     => static function () {
-				return is_user_logged_in();
+			'auth_callback'     => static function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+				return is_user_logged_in() && get_current_user_id() === $user_id;
 			},
 		]
 	);
@@ -291,7 +291,7 @@ function enqueueBlockEditorScripts(): void {
 	}
 
 	$data = (object) [
-		'isActive'        => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
+		'isActive'    => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
 		'version'     => $pluginData['Version'],
 		't'           => wp_generate_uuid4(),
 		'apiUrl'      => $apiUrl,

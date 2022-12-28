@@ -13,6 +13,9 @@ import apiFetch from '@wordpress/api-fetch';
 import {AiWriterIcon} from "./icons";
 import debounce from 'lodash/debounce';
 import {RangeControl} from '@wordpress/components';
+import {useDispatch} from '@wordpress/data';
+import {store as noticesStore} from '@wordpress/notices';
+
 // import {Spinner} from '@wordpress/components';
 // Snackbar -> core/notice data store: https://developer.wordpress.org/block-editor/reference-guides/data/data-core-notices/
 
@@ -23,6 +26,7 @@ const AiWriterSidebar = () => {
 	const [isLoading, setLoading] = useState(false);
 	const [temperature, setTemperature] = useState(AiWriter.temperature);
 	const [textLength, setTextLength] = useState(AiWriter.textLength);
+	const {createErrorNotice} = useDispatch(noticesStore);
 
 	const saveActionCodeDebounced = debounce(handleSaveActionCodeDebounced, 1000);
 	const updateUserMetaDebounced = debounce(updateUserMeta, 2000);
