@@ -239,6 +239,7 @@ function enqueueBlockEditorScripts(): void {
 	$data = (object) [
 		'isOn'        => true,
 		'version'     => $pluginData['Version'],
+		't'           => wp_generate_uuid4(),
 		'apiUrl'      => $apiUrl,
 		'temperature' => 0.8,
 		'maxTokens'   => 16,
