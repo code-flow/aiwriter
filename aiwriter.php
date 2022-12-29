@@ -122,6 +122,14 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 		);
 	}
 
+	$body = [
+		'model'       => "text-davinci-003",
+		'prompt'      => $request->get_param( 'prompt' ),
+		'temperature' => (float) $request->get_param( 'temperature' ),
+		'max_tokens'  => (int) $request->get_param( 'max_tokens' ),
+		'stream'      => false
+	];
+
 	$response = wp_remote_post(
 		$apiUrl,
 		[
@@ -129,13 +137,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 				'Authorization' => 'Bearer ' . $activationCode,
 				'Content-Type'  => 'application/json; charset=utf-8'
 			],
-			'body'        => json_encode( [
-				"model"       => "text-davinci-003",
-				"prompt"      => $request->get_param( 'prompt' ),
-				"temperature" => (float) $request->get_param( 'temperature' ),
-				"max_tokens"  => (int) $request->get_param( 'max_tokens' ),
-				"stream"      => false
-			] ),
+			'body'        => json_encode( $body ),
 			'data_format' => 'body',
 			'timeout'     => function_exists( 'ini_get' ) ? ini_get( 'max_execution_time' ) : 30,
 		]
