@@ -291,6 +291,7 @@ function enqueueBlockEditorScripts(): void {
 	}
 
 	$data = (object) [
+		'debug'       => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
 		'isActive'    => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
 		'version'     => $pluginData['Version'],
 		't'           => wp_generate_uuid4(),
