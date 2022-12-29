@@ -298,6 +298,7 @@ function enqueueBlockEditorScripts(): void {
 		'apiUrl'      => $apiUrl,
 		'temperature' => (float) get_user_meta( get_current_user_id(), 'aiwriter_temperature', true ),
 		'textLength'  => (int) get_user_meta( get_current_user_id(), 'aiwriter_textLength', true ),
+		'upgradeUrl'  => self_admin_url( 'update-core.php?force-check=1' ),
 	];
 
 	wp_add_inline_script(
