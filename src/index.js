@@ -1,8 +1,12 @@
 import React from 'react';
 import {registerPlugin} from '@wordpress/plugins';
 import AiWriterSidebar from "./sidebar";
-// do not uncomment the next line as it is needed by our AiWriter.js file
+
+// do not uncomment the next lines as it is needed by our AiWriter.js file
 import {subscribe, select, dispatch} from '@wordpress/data';
+import {__, sprintf} from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
+// end dependencies
 
 const AiWriter = window.AiWriter;
 
