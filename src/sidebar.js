@@ -15,7 +15,6 @@ import debounce from 'lodash/debounce';
 import {RangeControl} from '@wordpress/components';
 import {useDispatch} from '@wordpress/data';
 import {store as noticesStore} from '@wordpress/notices';
-
 // import {Spinner} from '@wordpress/components';
 // Snackbar -> core/notice data store: https://developer.wordpress.org/block-editor/reference-guides/data/data-core-notices/
 
@@ -45,8 +44,15 @@ const AiWriterSidebar = () => {
 			AiWriter[field] = value;
 			setLoading(false);
 		}).catch((error) => {
-			console.error(error);
+			if (AiWriter.debug) console.error(error);
 			setLoading(false);
+			createErrorNotice(
+				sprintf('Error: %s (%s)', error.message, error.code),
+				{
+					'type': 'snackbar',
+					'explicitDismiss': false
+				}
+			);
 		});
 	}
 
@@ -65,8 +71,15 @@ const AiWriterSidebar = () => {
 		}).then((res) => {
 			setLoading(false);
 		}).catch((error) => {
-			console.error(error);
+			if (AiWriter.debug) console.error(error);
 			setLoading(false);
+			createErrorNotice(
+				sprintf('Error: %s (%s)', error.message, error.code),
+				{
+					'type': 'snackbar',
+					'explicitDismiss': false
+				}
+			);
 		});
 	}
 
@@ -85,8 +98,15 @@ const AiWriterSidebar = () => {
 			setActivationCode(res['aiwriter/activation_code'] !== '' ? 'ENCRYPTED' : '');
 			setLoading(false);
 		}).catch((error) => {
-			console.error(error);
+			if (AiWriter.debug) console.error(error);
 			setLoading(false);
+			createErrorNotice(
+				sprintf('Error: %s (%s)', error.message, error.code),
+				{
+					'type': 'snackbar',
+					'explicitDismiss': false
+				}
+			);
 		});
 	}
 
