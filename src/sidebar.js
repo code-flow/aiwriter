@@ -12,7 +12,7 @@ import {
 import apiFetch from '@wordpress/api-fetch';
 import {AiWriterIcon} from "./icons";
 import debounce from 'lodash/debounce';
-import {RangeControl} from '@wordpress/components';
+import {RangeControl, Button} from '@wordpress/components';
 import {useDispatch} from '@wordpress/data';
 import {store as noticesStore} from '@wordpress/notices';
 // import {Spinner} from '@wordpress/components';
@@ -213,6 +213,21 @@ const AiWriterSidebar = () => {
 								target="_blank">{__('Don\'t have an activation code yet? Click here.', 'aiwriter')}</a>
 						</p>
 						: null}
+					{
+						// @todo add "manage subscription" link
+					}
+				</PanelBody>
+				<PanelBody title={__('FAQ & Features', 'aiwriter')} initialOpen={false}>
+					<ul>
+						<li>
+							<Button variant="link" icon="external" iconSize={5} target="_blank"
+									href="https://aiwriter.space/faq.html">{__('Frequently asked questions', 'aiwriter')}</Button>
+						</li>
+						<li>
+							<Button variant="link" icon="external" iconSize={5} target="_blank"
+									href="https://aiwriterwp.canny.io/feature-requests">{__('Feature requests', 'aiwriter')}</Button>
+						</li>
+					</ul>
 				</PanelBody>
 			</PluginSidebar>
 		</>
