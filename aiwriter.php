@@ -428,7 +428,7 @@ function checkPluginUpdate( $toUpdate, $pluginData ) {
 		'id'      => $pluginData['UpdateURI'],
 		'slug'    => plugin_basename( __FILE__ ),
 		'version' => $latestVersion,
-		'package' => 'https://github.com/code-flow/aiwriter/releases/latest/download/ai-writer.zip',
+		'package' => 'https://github.com/code-flow/aiwriter/releases/latest/download/aiwriter.zip',
 
 	];
 }
@@ -463,7 +463,7 @@ function pluginInformation( $result, string $action, object $args ) {
 		'author'         => '<a href="https://aiwriter.space">AiWriter.space</a>',
 		'author_profile' => 'https://profiles.wordpress.org/floriansimeth/',
 		'homepage'       => 'https://aiwriter.space',
-		'download_link'  => 'https://github.com/code-flow/aiwriter/releases/latest/download/ai-writer.zip',
+		'download_link'  => 'https://github.com/code-flow/aiwriter/releases/latest/download/aiwriter.zip',
 		'sections'       => [
 			'changelog' => sprintf(
 				'The <a href="https://github.com/code-flow/aiwriter/commits/0.2.0/%s" target="_blank">changelog</a> can be found on Github.',
