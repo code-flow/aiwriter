@@ -185,16 +185,28 @@ export const Settings = () => {
 			</PanelBody>
 			<PanelBody title={__('Your subscription', 'aiwriter')} initialOpen={false}
 					   onToggle={getActivationCode}>
-				<TextControl
-					onChange={saveActivationCode}
-					value={activationCode === 'ENCRYPTED' ? '' : activationCode}
-					placeholder={
-						isLoading
-							? __('Loading code ...', 'aiwriter')
-							: activationCode === 'ENCRYPTED' ? __('**encrypted**', 'aiwriter') : 'abcdefghijklmnopqrstuvwxyz='
-					}
-					label={__('Activation code', 'aiwriter')} key="activation-code"
-				/>
+				{
+					activationCode === 'ENCRYPTED'
+						? <>
+							<p>
+								{__('Activation code already entered.', 'aiwriter')}
+								{' '}
+								<Button variant='link'
+										onClick={() => setActivationCode('')}>{__('Edit', 'aiwriter')}</Button>
+							</p>
+						</>
+						: <TextControl
+							onChange={saveActivationCode}
+							value={activationCode === 'ENCRYPTED' ? '' : activationCode}
+							placeholder={
+								isLoading
+									? __('Loading code ...', 'aiwriter')
+									: activationCode === 'ENCRYPTED' ? __('**encrypted**', 'aiwriter') : 'abcdefghijklmnopqrstuvwxyz='
+							}
+							label={__('Activation code', 'aiwriter')} key="activation-code"
+						/>
+				}
+
 				{activationCode === '' && !isLoading
 					? <p><a href="https://aiwriter.space"
 							target="_blank">{__('Don\'t have an activation code yet? Click here.', 'aiwriter')}</a>
