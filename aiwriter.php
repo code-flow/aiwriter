@@ -230,21 +230,38 @@ add_action( 'admin_init', 'wpbuddy\ai_writer\registerScripts' );
  * @since 0.1.0
  */
 function registerScripts(): void {
-	$asset = include __DIR__ . '/build/index.asset.php';
+	$assetBlockEditor = include __DIR__ . '/build/blockEditor.asset.php';
 
 	wp_register_script(
 		'ai-writer-block-editor',
-		plugins_url( '/build/index.js', __FILE__ ),
-		$asset['dependencies'],
-		$asset['version'],
+		plugins_url( '/build/blockEditor.js', __FILE__ ),
+		$assetBlockEditor['dependencies'],
+		$assetBlockEditor['version'],
 		true
 	);
 
 	wp_register_style(
 		'ai-writer-block-editor',
-		plugins_url( '/build/index.css', __FILE__ ),
+		plugins_url( '/build/blockEditor.css', __FILE__ ),
 		[],
-		$asset['version']
+		$assetBlockEditor['version']
+	);
+
+	$assetClassicEditor = include __DIR__ . '/build/classicEditor.asset.php';
+
+	wp_register_script(
+		'ai-writer-classic-editor',
+		plugins_url( '/build/classicEditor.js', __FILE__ ),
+		array_merge( $assetClassicEditor['dependencies'], [ 'wp-tinymce' ] ),
+		$assetClassicEditor['version'],
+		true
+	);
+
+	wp_register_style(
+		'ai-writer-classic-editor',
+		plugins_url( '/build/classicEditor.css', __FILE__ ),
+		['wp-components'],
+		$assetClassicEditor['version']
 	);
 }
 
@@ -269,11 +286,6 @@ function enqueueBlockEditorScripts(): void {
 		return;
 	}
 
-	if ( ! $screen->is_block_editor ) {
-		return;
-	}
-
-	wp_enqueue_script( 'ai-writer-block-editor' );
 
 	if ( ! function_exists( 'get_plugin_data' ) ) {
 		$file = ABSPATH . 'wp-admin/includes/plugin.php';
@@ -303,16 +315,25 @@ function enqueueBlockEditorScripts(): void {
 		'upgradeUrl'  => self_admin_url( 'update-core.php?force-check=1' ),
 	];
 
+	if ( $screen->is_block_editor ) {
+		$editor = 'block';
+	} else {
+		$editor = 'classic';
+	}
+
+	wp_enqueue_script( 'ai-writer-' . $editor . '-editor' );
+	wp_enqueue_style( 'ai-writer-' . $editor . '-editor' );
+
+	add_editor_style( plugins_url( '/build/classicEditor.css', __FILE__ ), );
+
 	wp_add_inline_script(
-		'ai-writer-block-editor',
+		'ai-writer-' . $editor . '-editor',
 		sprintf(
 			'window.AiWriter = %s',
 			json_encode( $data )
 		),
 		'before'
 	);
-
-	wp_enqueue_style( 'ai-writer-block-editor' );
 }
 
 /**
@@ -471,4 +492,25 @@ function pluginInformation( $result, string $action, object $args ) {
 			)
 		],
 	];
+}
+
+add_action( 'add_meta_boxes', 'wpbuddy\ai_writer\addMetaBoxes' );
+
+function addMetaBoxes(): void {
+	add_meta_box(
+		'aiwriter-settings',
+		__( 'AiWriter Settings', 'aiwriter' ),
+		'wpbuddy\ai_writer\classicEditorMetaBoxSettings',
+		get_current_screen(),
+		'side',
+		'core',
+		[
+			'__block_editor_compatible_meta_box' => false,
+			'__back_compat_meta_box'             => true,
+		]
+	);
+}
+
+function classicEditorMetaBoxSettings(): void {
+	echo '<div id="aiWriterSettings"></div>';
 }

@@ -1,0 +1,22 @@
+#aiwriter-settings {
+  .inside {
+	margin: 0;
+	padding: 0;
+  }
+}
+
+#aiWriterSettings {
+  .components-panel__body {
+	&.is-opened {
+	  padding: 0;
+	}
+
+	& > *:not(h2) {
+	  padding: 0 28px;
+	}
+  }
+
+  .components-range-control__mark-label {
+	top: 20px;
+  }
+}

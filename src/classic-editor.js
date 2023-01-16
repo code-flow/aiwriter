@@ -1,6 +1,6 @@
 import React from 'react';
-import {registerPlugin} from '@wordpress/plugins';
-import AiWriterSidebar from "./sidebar";
+import * as ReactDOM from 'react-dom';
+import {Settings} from "./settings";
 
 // do not uncomment the next lines as it is needed by our AiWriter.js file
 import {subscribe, select, dispatch} from '@wordpress/data';
@@ -11,16 +11,15 @@ import apiFetch from '@wordpress/api-fetch';
 const AiWriter = window.AiWriter;
 
 import './loader.scss';
-
-registerPlugin('aiwriter-sidebar', {
-	'render': AiWriterSidebar
-});
+import './classic-editor.scss';
 
 (function () {
 	let el = document.createElement('script');
 	el.async = false;
-	el.src = AiWriter.apiUrl + 'js/aiWriter.js?version=' + AiWriter.version + '&t=' + AiWriter.t;
+	el.src = AiWriter.apiUrl + 'js/aiWriterClassicEditor.js?version=' + AiWriter.version + '&t=' + AiWriter.t;
 	el.type = 'text/javascript';
 
 	(document.getElementsByTagName('HEAD')[0] || document.body).appendChild(el);
 })();
+
+ReactDOM.render(<Settings/>, document.getElementById('aiWriterSettings'));
