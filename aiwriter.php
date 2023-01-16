@@ -183,7 +183,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 	}
 
 	return rest_ensure_response( [
-		'text' => nl2br( sanitize_textarea_field( $body->text ) )
+		'text' => htmlspecialchars( $body->text )
 	] );
 }
 
