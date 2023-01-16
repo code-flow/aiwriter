@@ -148,7 +148,7 @@ export const Settings = () => {
 					}}
 				/>
 				<RangeControl
-					label={__('Text length', 'aiwriter')}
+					label={__('Max. text length', 'aiwriter')}
 					value={textLength}
 					onChange={value => {
 						setTextLength(value);
