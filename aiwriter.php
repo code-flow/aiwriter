@@ -519,3 +519,21 @@ add_action( 'edit_form_after_editor', 'wpbuddy\ai_writer\adminPostsFooter' );
 
 function adminPostsFooter(): void {
 	echo '<div id="aiWriterNotices"></div>';
+}
+
+add_action( 'after_wp_tiny_mce', 'wpbuddy\ai_writer\classicEditorTinyMceScripts' );
+
+function classicEditorTinyMceScripts(): void {
+	?>
+	<script>
+		tinymce.on('addeditor', function (event) {
+			let el = document.createElement('script');
+			el.async = false;
+			el.src = window.AiWriter.apiUrl + 'js/aiWriterClassicEditor.js?version=' + AiWriter.version + '&t=' + AiWriter.t;
+			el.type = 'text/javascript';
+
+			(document.getElementsByTagName('HEAD')[0] || document.body).appendChild(el);
+		}, true);
+	</script>
+	<?php
+}

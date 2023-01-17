@@ -9,19 +9,8 @@ import {__, sprintf} from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 // end dependencies
 
-const AiWriter = window.AiWriter;
-
 import './loader.scss';
 import './classic-editor.scss';
-
-(function () {
-	let el = document.createElement('script');
-	el.async = false;
-	el.src = AiWriter.apiUrl + 'js/aiWriterClassicEditor.js?version=' + AiWriter.version + '&t=' + AiWriter.t;
-	el.type = 'text/javascript';
-
-	(document.getElementsByTagName('HEAD')[0] || document.body).appendChild(el);
-})();
 
 ReactDOM.render(<Settings/>, document.getElementById('aiWriterSettings'));
 ReactDOM.render(<Notices/>, document.getElementById('aiWriterNotices'));
