@@ -1,0 +1,15 @@
+#aiWriterNotices {
+  position: fixed;
+  top: 50px;
+  z-index: 9999;
+  width: 100%;
+  max-width: 700px;
+
+  .components-notice {
+	margin: 0 0 1rem 0;
+
+	.components-notice__dismiss {
+	  align-self: center;
+	}
+  }
+}

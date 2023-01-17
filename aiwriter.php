@@ -514,3 +514,8 @@ function addMetaBoxes(): void {
 function classicEditorMetaBoxSettings(): void {
 	echo '<div id="aiWriterSettings"></div>';
 }
+
+add_action( 'edit_form_after_editor', 'wpbuddy\ai_writer\adminPostsFooter' );
+
+function adminPostsFooter(): void {
+	echo '<div id="aiWriterNotices"></div>';
