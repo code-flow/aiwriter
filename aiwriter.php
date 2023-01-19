@@ -450,6 +450,12 @@ function checkPluginUpdate( $toUpdate, $pluginData ) {
 		'slug'    => plugin_basename( __FILE__ ),
 		'version' => $latestVersion,
 		'package' => 'https://github.com/code-flow/aiwriter/releases/latest/download/aiwriter.zip',
+		'icons'   => [
+			'svg'     => '',
+			'2x'      => 'https://aiwriter.space/public/assets/images/ai-writer-logo.jpg',
+			'1x'      => '',
+			'default' => 'https://aiwriter.space/public/assets/images/ai-writer-logo.jpg'
+		]
 
 	];
 }
