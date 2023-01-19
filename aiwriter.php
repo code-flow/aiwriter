@@ -473,7 +473,19 @@ function pluginInformation( $result, string $action, object $args ) {
 		return $result;
 	}
 
-	$latestData = checkPluginUpdate( false, [ 'UpdateURI' => 'code-flow/aiwriter', 'Version' => '0.1.0' ] );
+	if ( ! function_exists( 'get_plugin_data' ) ) {
+		$file = ABSPATH . 'wp-admin/includes/plugin.php';
+
+		if ( is_file( $file ) ) {
+			require $file;
+		} else {
+			return $result;
+		}
+	}
+
+	$pluginData = get_plugin_data( __FILE__, false, false );
+
+	$latestData = checkPluginUpdate( false, $pluginData );
 
 	$latestVersion = is_array( $latestData ) && array_key_exists( 'version', $latestData ) ? $latestData['version'] : '';
 
@@ -487,7 +499,7 @@ function pluginInformation( $result, string $action, object $args ) {
 		'download_link'  => 'https://github.com/code-flow/aiwriter/releases/latest/download/aiwriter.zip',
 		'sections'       => [
 			'changelog' => sprintf(
-				'The <a href="https://github.com/code-flow/aiwriter/commits/0.2.0/%s" target="_blank">changelog</a> can be found on Github.',
+				'The <a href="https://github.com/code-flow/aiwriter/commits/%s/" target="_blank">changelog</a> can be found on Github.',
 				$latestVersion
 			)
 		],
