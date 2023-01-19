@@ -496,6 +496,10 @@ function pluginInformation( $result, string $action, object $args ) {
 
 add_action( 'add_meta_boxes', 'wpbuddy\ai_writer\addMetaBoxes' );
 
+/**
+ * @return void
+ * @since 0.4.0
+ */
 function addMetaBoxes(): void {
 	add_meta_box(
 		'aiwriter-settings',
@@ -511,18 +515,30 @@ function addMetaBoxes(): void {
 	);
 }
 
+/**
+ * @return void
+ * @since 0.4.0
+ */
 function classicEditorMetaBoxSettings(): void {
 	echo '<div id="aiWriterSettings"></div>';
 }
 
 add_action( 'edit_form_after_editor', 'wpbuddy\ai_writer\adminPostsFooter' );
 
+/**
+ * @return void
+ * @since 0.4.0
+ */
 function adminPostsFooter(): void {
 	echo '<div id="aiWriterNotices"></div>';
 }
 
 add_action( 'after_wp_tiny_mce', 'wpbuddy\ai_writer\classicEditorTinyMceScripts' );
 
+/**
+ * @return void
+ * @since 0.4.0
+ */
 function classicEditorTinyMceScripts(): void {
 	?>
     <script>
