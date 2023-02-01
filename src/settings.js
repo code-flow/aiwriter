@@ -194,6 +194,8 @@ export const Settings = () => {
 								<Button variant='link'
 										onClick={() => setActivationCode('')}>{__('Edit', 'aiwriter')}</Button>
 							</p>
+							<p><a href="https://billing.aiwriter.space/p/login/aEU4jGfC87qg7NSaEE"
+								  target="_blank">{__('Manage your subscription', 'aiwriter')}</a></p>
 						</>
 						: <TextControl
 							onChange={saveActivationCode}
