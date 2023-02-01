@@ -97,6 +97,23 @@ function registerSettings(): void {
 	);
 }
 
+/**
+ * @return string
+ * @since 0.5.0
+ */
+function getCurrentUserFirstname(): string {
+
+	$user = wp_get_current_user();
+
+	$first_name = get_user_meta( $user->ID, 'first_name', true );
+
+	if ( ! empty( $first_name ) ) {
+		return $first_name;
+	}
+
+	return $user->display_name;
+}
+
 add_action( 'rest_api_init', 'wpbuddy\ai_writer\setupRestRoutes' );
 
 /**
@@ -113,8 +130,29 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 		$apiUrl = trailingslashit( AIWRITER_DEV_API_URL );
 	}
 
+	$activationCodeEncrypted = get_option( 'aiwriter/activation_code', '' );
+
+	if ( empty( $activationCodeEncrypted ) ) {
+		return new WP_Error(
+			'ai-writer-no-license-information',
+			sprintf(
+				__( 'Hey %s, it looks like you haven\'t added your licence information yet. Enter the licence key in the settings (on the right side) and you\'re good to go.', 'aiwriter' ),
+				getCurrentUserFirstname()
+			),
+			[
+				'action'       => 'openSettings',
+				'moreMessages' => [
+					[
+						'message'   => __( 'If you don\'t have a license key, sign up for our newsletter and gain access to all features for 7 days. Our newsletter provides valuable tips on how to fully utilize the AI and subscribing will make you a pro-user with access to exclusive best-practice information.', 'aiwriter' ),
+						'buttonUrl' => 'https://aiwriter.space/7-day-trial.html'
+					]
+				],
+			]
+		);
+	}
+
 	try {
-		$activationCode = cryptoHelper( get_option( 'aiwriter/activation_code', '' ), 'decrypt' );
+		$activationCode = cryptoHelper( $activationCodeEncrypted, 'decrypt' );
 	} catch ( Exception $e ) {
 		return new WP_Error(
 			'ai-writer-gpt-rest-crypto-error',
@@ -305,14 +343,16 @@ function enqueueBlockEditorScripts(): void {
 	}
 
 	$data = (object) [
-		'debug'       => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
-		'isActive'    => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
-		'version'     => $pluginData['Version'],
-		't'           => wp_generate_uuid4(),
-		'apiUrl'      => $apiUrl,
-		'temperature' => (float) get_user_meta( get_current_user_id(), 'aiwriter_temperature', true ),
-		'textLength'  => (int) get_user_meta( get_current_user_id(), 'aiwriter_textLength', true ),
-		'upgradeUrl'  => self_admin_url( 'update-core.php?force-check=1' ),
+		'debug'         => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
+		'isActive'      => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
+		'version'       => $pluginData['Version'],
+		't'             => wp_generate_uuid4(),
+		'apiUrl'        => $apiUrl,
+		'temperature'   => (float) get_user_meta( get_current_user_id(), 'aiwriter_temperature', true ),
+		'textLength'    => (int) get_user_meta( get_current_user_id(), 'aiwriter_textLength', true ),
+		'upgradeUrl'    => self_admin_url( 'update-core.php?force-check=1' ),
+		'userFirstName' => getCurrentUserFirstname(),
+		'userEmail'     => wp_get_current_user()->user_email,
 	];
 
 	if ( $screen->is_block_editor ) {
