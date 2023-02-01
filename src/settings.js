@@ -214,9 +214,6 @@ export const Settings = () => {
 							target="_blank">{__('Don\'t have an activation code yet? Click here.', 'aiwriter')}</a>
 					</p>
 					: null}
-				{
-					// @todo add "manage subscription" link
-				}
 			</PanelBody>
 			<PanelBody title={__('FAQ & Features', 'aiwriter')} initialOpen={false}>
 				<ul>
