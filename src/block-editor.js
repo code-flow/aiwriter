@@ -12,8 +12,8 @@ const AiWriter = window.AiWriter;
 
 import './loader.scss';
 
-registerPlugin('aiwriter-sidebar', {
-	'render': AiWriterSidebar
+registerPlugin('aiwriter', {
+    'render': AiWriterSidebar
 });
 
 (function () {
