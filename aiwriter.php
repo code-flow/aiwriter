@@ -117,18 +117,28 @@ function getCurrentUserFirstname(): string {
 add_action( 'rest_api_init', 'wpbuddy\ai_writer\setupRestRoutes' );
 
 /**
+ * Gets the API URL.
+ * @return string
+ * @since 0.5.0
+ */
+function getApiUrl(): string {
+	$apiUrl = AIWRITER_API_URL;
+
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'AIWRITER_DEV_API_URL' ) ) {
+		$apiUrl = trailingslashit( AIWRITER_DEV_API_URL );
+	}
+
+	return $apiUrl;
+}
+
+
+/**
  * @param WP_REST_Request $request
  *
  * @return WP_REST_Response|WP_Error|WP_HTTP_Response
  * @since 0.1.0
  */
 function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_HTTP_Response {
-
-	$apiUrl = AIWRITER_API_URL;
-
-	if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'AIWRITER_DEV_API_URL' ) ) {
-		$apiUrl = trailingslashit( AIWRITER_DEV_API_URL );
-	}
 
 	$activationCodeEncrypted = get_option( 'aiwriter/activation_code', '' );
 
@@ -169,7 +179,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 	];
 
 	$response = wp_remote_post(
-		$apiUrl,
+		getApiUrl(),
 		[
 			'headers'     => [
 				'Authorization' => 'Bearer ' . $activationCode,
