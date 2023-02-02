@@ -3,7 +3,7 @@ import {RangeControl, Button} from '@wordpress/components';
 import debounce from 'lodash/debounce';
 import {useState} from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
-import {useDispatch} from '@wordpress/data';
+import {useDispatch, select} from '@wordpress/data';
 import {store as noticesStore} from '@wordpress/notices';
 import {
 	PanelBody,
@@ -18,7 +18,7 @@ export const Settings = () => {
 	const [temperature, setTemperature] = useState(AiWriter.temperature);
 	const [textLength, setTextLength] = useState(AiWriter.textLength);
 	const [activationCode, setActivationCode] = useState('');
-	const {createErrorNotice} = useDispatch(noticesStore);
+	const {createErrorNotice, createNotice} = useDispatch(noticesStore);
 
 	const updateUserMetaDebounced = debounce(updateUserMeta, 2000);
 	const saveActionCodeDebounced = debounce(handleSaveActionCodeDebounced, 1000);
@@ -210,11 +210,13 @@ export const Settings = () => {
 				}
 
 				{activationCode === '' && !isLoading
-					? <p><a href="https://aiwriter.space"
-							target="_blank">{__('Don\'t have an activation code yet? Click here.', 'aiwriter')}</a>
+					?
+					<p key="buy-now"><a href="https://aiwriter.space"
+										target="_blank">{__('Don\'t have an activation code yet? Click here.', 'aiwriter')}</a>
 					</p>
 					: null}
 			</PanelBody>
+
 			<PanelBody title={__('FAQ & Features', 'aiwriter')} initialOpen={false}>
 				<ul>
 					<li>
