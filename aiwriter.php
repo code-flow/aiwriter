@@ -363,6 +363,7 @@ function enqueueBlockEditorScripts(): void {
 		'upgradeUrl'    => self_admin_url( 'update-core.php?force-check=1' ),
 		'userFirstName' => getCurrentUserFirstname(),
 		'userEmail'     => wp_get_current_user()->user_email,
+		'editorType'    => $screen->is_block_editor ? 'block' : 'classic',
 	];
 
 	if ( $screen->is_block_editor ) {
