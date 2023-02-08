@@ -2,7 +2,7 @@
 Contributors:      floriansimeth
 Tags:              block
 Tested up to:      6.1
-Stable tag:        0.5.0
+Stable tag:        0.5.1
 Requires PHP:      8.0
 Requires at least: 6.0
 Donate link:       https://aiwriter.space
