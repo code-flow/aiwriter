@@ -1,6 +1,6 @@
 === AiWriter ===
 Contributors:      floriansimeth
-Tags:              block
+Tags:              gpt3, chat-gpt, ai, writer, content creation, content generation, content writing, content automation
 Tested up to:      6.1
 Stable tag:        0.5.1
 Requires PHP:      8.0
