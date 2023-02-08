@@ -171,11 +171,14 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 	}
 
 	$body = [
-		'model'       => "text-davinci-003",
-		'prompt'      => $request->get_param( 'prompt' ),
-		'temperature' => (float) $request->get_param( 'temperature' ),
-		'max_tokens'  => (int) $request->get_param( 'max_tokens' ),
-		'stream'      => false
+		'model'             => "text-davinci-003",
+		'prompt'            => $request->get_param( 'prompt' ),
+		'temperature'       => (float) $request->get_param( 'temperature' ),
+		'max_tokens'        => (int) $request->get_param( 'max_tokens' ),
+		'frequency_penalty' => (float) $request->get_param( 'frequency_penalty' ),
+		'presence_penalty'  => (float) $request->get_param( 'presence_penalty' ),
+		'top_p'             => (float) $request->get_param( 'top_p' ),
+		'stream'            => false
 	];
 
 	$response = wp_remote_post(
@@ -248,7 +251,7 @@ function setupRestRoutes(): void {
 			return current_user_can( 'edit_posts' );
 		},
 		'args'                => [
-			'prompt'      => [
+			'prompt'            => [
 				'required'          => true,
 				'type'              => 'string',
 				'sanitize_callback' => function ( $param ) {
@@ -256,15 +259,33 @@ function setupRestRoutes(): void {
 					return sanitize_text_field( $param );
 				},
 			],
-			'temperature' => [
+			'temperature'       => [
 				'type'             => 'number',
 				'exclusiveMinimum' => 0,
 				'exclusiveMaximum' => 1,
 			],
-			'max_tokens'  => [
+			'max_tokens'        => [
 				'type'             => 'integer',
 				'exclusiveMinimum' => 1,
 				'exclusiveMaximum' => 4096,
+			],
+			'presence_penalty'  => [
+				'type'             => 'number',
+				'exclusiveMinimum' => - 2.0,
+				'exclusiveMaximum' => 2.0,
+				'default'          => 0,
+			],
+			'frequency_penalty' => [
+				'type'             => 'number',
+				'exclusiveMinimum' => - 2.0,
+				'exclusiveMaximum' => 2.0,
+				'default'          => 0,
+			],
+			'top_p'             => [
+				'type'             => 'number',
+				'minimum'          => 0.0,
+				'exclusiveMaximum' => 1.0,
+				'default'          => 1,
 			]
 		],
 	] );
