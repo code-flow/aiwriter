@@ -234,7 +234,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 	}
 
 	return rest_ensure_response( [
-		'text' => htmlspecialchars( $body->text )
+		'text' => $body->text
 	] );
 }
 
