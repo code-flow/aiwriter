@@ -385,6 +385,7 @@ function enqueueBlockEditorScripts(): void {
 		'userFirstName' => getCurrentUserFirstname(),
 		'userEmail'     => wp_get_current_user()->user_email,
 		'editorType'    => $screen->is_block_editor ? 'block' : 'classic',
+		'language'      => get_locale()
 	];
 
 	if ( $screen->is_block_editor ) {
