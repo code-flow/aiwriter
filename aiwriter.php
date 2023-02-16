@@ -23,6 +23,7 @@ use WP_REST_Request;
 use WP_REST_Response;
 
 define( 'AIWRITER_API_URL', 'https://aiwriter.space/api/' );
+define( 'AIWRITER_STREAM_URL', 'https://stream.aiwriter.workers.dev' );
 
 add_action( 'init', 'wpbuddy\ai_writer\registerSettings' );
 
@@ -368,24 +369,35 @@ function enqueueBlockEditorScripts(): void {
 
 	$pluginData = get_plugin_data( __FILE__, false, false );
 	$apiUrl     = AIWRITER_API_URL;
+	$streamUrl  = AIWRITER_STREAM_URL;
 
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'AIWRITER_DEV_API_URL' ) ) {
-		$apiUrl = trailingslashit( AIWRITER_DEV_API_URL );
+		$apiUrl    = trailingslashit( AIWRITER_DEV_API_URL );
+		$streamUrl = 'http://127.0.0.1:8787';
+	}
+
+	$activationCodeEncrypted = get_option( 'aiwriter/activation_code', '' );
+	try {
+		$activationCode = cryptoHelper( $activationCodeEncrypted, 'decrypt' );
+	} catch ( Exception $e ) {
+		$activationCode = '';
 	}
 
 	$data = (object) [
-		'debug'         => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
-		'isActive'      => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
-		'version'       => $pluginData['Version'],
-		't'             => wp_generate_uuid4(),
-		'apiUrl'        => $apiUrl,
-		'temperature'   => (float) get_user_meta( get_current_user_id(), 'aiwriter_temperature', true ),
-		'textLength'    => (int) get_user_meta( get_current_user_id(), 'aiwriter_textLength', true ),
-		'upgradeUrl'    => self_admin_url( 'update-core.php?force-check=1' ),
-		'userFirstName' => getCurrentUserFirstname(),
-		'userEmail'     => wp_get_current_user()->user_email,
-		'editorType'    => $screen->is_block_editor ? 'block' : 'classic',
-		'language'      => get_locale()
+		'debug'          => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
+		'isActive'       => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
+		'version'        => $pluginData['Version'],
+		't'              => wp_generate_uuid4(),
+		'apiUrl'         => $apiUrl,
+		'apiStreamUrl'   => $streamUrl,
+		'temperature'    => (float) get_user_meta( get_current_user_id(), 'aiwriter_temperature', true ),
+		'textLength'     => (int) get_user_meta( get_current_user_id(), 'aiwriter_textLength', true ),
+		'upgradeUrl'     => self_admin_url( 'update-core.php?force-check=1' ),
+		'userFirstName'  => getCurrentUserFirstname(),
+		'userEmail'      => wp_get_current_user()->user_email,
+		'editorType'     => $screen->is_block_editor ? 'block' : 'classic',
+		'language'       => get_locale(),
+		'activationCode' => $activationCode,
 	];
 
 	if ( $screen->is_block_editor ) {

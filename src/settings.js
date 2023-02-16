@@ -34,6 +34,7 @@ export const Settings = () => {
 			},
 		}).then((res) => {
 			setLoading(false);
+			AiWriter.activationCode = code;
 		}).catch((error) => {
 			if (AiWriter.debug) console.error(error);
 			setLoading(false);
