@@ -63,6 +63,24 @@ function registerSettings(): void {
 
 	register_meta(
 		'user',
+		'aiwriter_onboardingCompleted',
+		[
+			'type'              => 'boolean',
+			'description'       => __( 'If the onboarding process has been completed.', 'aiwriter' ),
+			'single'            => true,
+			'default'           => false,
+			'show_in_rest'      => true,
+			'sanitize_callback' => static function ( $val ) {
+				return (bool) $val;
+			},
+			'auth_callback'     => static function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+				return is_user_logged_in() && get_current_user_id() === $user_id;
+			},
+		]
+	);
+
+	register_meta(
+		'user',
 		'aiwriter_temperature',
 		[
 			'type'              => 'number',
@@ -384,20 +402,21 @@ function enqueueBlockEditorScripts(): void {
 	}
 
 	$data = (object) [
-		'debug'          => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
-		'isActive'       => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
-		'version'        => $pluginData['Version'],
-		't'              => wp_generate_uuid4(),
-		'apiUrl'         => $apiUrl,
-		'apiStreamUrl'   => $streamUrl,
-		'temperature'    => (float) get_user_meta( get_current_user_id(), 'aiwriter_temperature', true ),
-		'textLength'     => (int) get_user_meta( get_current_user_id(), 'aiwriter_textLength', true ),
-		'upgradeUrl'     => self_admin_url( 'update-core.php?force-check=1' ),
-		'userFirstName'  => getCurrentUserFirstname(),
-		'userEmail'      => wp_get_current_user()->user_email,
-		'editorType'     => $screen->is_block_editor ? 'block' : 'classic',
-		'language'       => get_locale(),
-		'activationCode' => $activationCode,
+		'debug'           => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
+		'isActive'        => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
+		'startOnboarding' => ! (bool) get_user_meta( get_current_user_id(), 'aiwriter_onboardingCompleted', true ),
+		'version'         => $pluginData['Version'],
+		't'               => wp_generate_uuid4(),
+		'apiUrl'          => $apiUrl,
+		'apiStreamUrl'    => $streamUrl,
+		'temperature'     => (float) get_user_meta( get_current_user_id(), 'aiwriter_temperature', true ),
+		'textLength'      => (int) get_user_meta( get_current_user_id(), 'aiwriter_textLength', true ),
+		'upgradeUrl'      => self_admin_url( 'update-core.php?force-check=1' ),
+		'userFirstName'   => getCurrentUserFirstname(),
+		'userEmail'       => wp_get_current_user()->user_email,
+		'editorType'      => $screen->is_block_editor ? 'block' : 'classic',
+		'language'        => get_locale(),
+		'activationCode'  => $activationCode,
 	];
 
 	if ( $screen->is_block_editor ) {
