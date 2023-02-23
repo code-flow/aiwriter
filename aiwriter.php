@@ -43,6 +43,17 @@ function registerSettings(): void {
 		]
 	);
 
+	register_setting(
+		'options',
+		'aiwriter/openai_secret_key',
+		[
+			'type'              => 'string',
+			'sanitize_callback' => '\wpbuddy\ai_writer\cryptoHelper',
+			'show_in_rest'      => true,
+			'default'           => ''
+		]
+	);
+
 	register_meta(
 		'user',
 		'aiwriter_isActive',
@@ -210,6 +221,18 @@ function restGetToken( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 		);
 	}
 
+	$openAiSecretKeyEncrypted = trim( get_option( 'aiwriter/openai_secret_key', '' ) );
+
+	if ( ! empty( $openAiSecretKeyEncrypted ) ) {
+		try {
+			$openAiSecretKey = cryptoHelper( $openAiSecretKeyEncrypted, 'decrypt' );
+		} catch ( Exception $e ) {
+			return new WP_Error(
+				'ai-writer-token-rest-crypto-error',
+				sprintf( __( 'Could not decrypt your Open AI Secret Key code. Got error: %s', 'aiwriter' ), $e->getMessage() ),
+			);
+		}
+	}
 
 	$response = wp_remote_post(
 		getStreamTokenUrl(),

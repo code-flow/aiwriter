@@ -1,5 +1,5 @@
 import {__} from '@wordpress/i18n';
-import {Button} from '@wordpress/components';
+import {Button, Spinner} from '@wordpress/components';
 import debounce from 'lodash/debounce';
 import {useState} from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
@@ -16,9 +16,41 @@ export const Settings = () => {
 	const [isLoading, setLoading] = useState(false);
 
 	const [activationCode, setActivationCode] = useState('');
+	const [openAiSecretKey, setOpenAiSecretKey] = useState('');
 	const {createErrorNotice} = useDispatch(noticesStore);
 
 	const saveActionCodeDebounced = debounce(handleSaveActionCodeDebounced, 1000);
+	const saveOpenAiSecretKeyDebounced = debounce(handleOpenAiSecretKeyDebounced, 1000);
+
+	function handleOpenAiSecretKeyDebounced(key) {
+		if (key === '') return;
+
+		const {editorType} = window.AiWriter;
+
+		setLoading(true);
+
+		apiFetch({
+			path: '/wp/v2/settings/',
+			method: 'POST',
+			data: {
+				'option_name': 'aiwriter/openai_secret_key',
+				'aiwriter/openai_secret_key': code
+			},
+		}).then(res => {
+			setLoading(false);
+		}).catch(error => {
+			if (AiWriter.debug) console.error(error);
+			setLoading(false);
+			createErrorNotice(
+				sprintf('Error: %s (%s)', error.message, error.code),
+				{
+					'type': 'snackbar',
+					'explicitDismiss': false,
+					'context': editorType === 'classic' ? 'aiWriter' : 'global',
+				}
+			);
+		});
+	}
 
 	function handleSaveActionCodeDebounced(code) {
 		if (code === '') return;
@@ -48,9 +80,38 @@ export const Settings = () => {
 		});
 	}
 
+	function saveOpenAiSecretKey(key) {
+		setOpenAiSecretKey(key);
+		saveOpenAiSecretKeyDebounced(key);
+	}
+
 	function saveActivationCode(code) {
 		setActivationCode(code);
 		saveActionCodeDebounced(code);
+	}
+
+	const getOpenAiSecretKey = () => {
+		if (openAiSecretKey !== '') return;
+		const {editorType} = window.AiWriter;
+		setLoading(true);
+		apiFetch({
+			path: '/wp/v2/settings?option_name=aiwriter%2Fopenai_secret_key',
+			method: 'GET',
+		}).then(res => {
+			setOpenAiSecretKey(res['aiwriter/openai_secret_key'] !== '' ? 'ENCRYPTED' : '');
+			setLoading(false);
+		}).catch(error => {
+			if (AiWriter.debug) console.error(error);
+			setLoading(false);
+			createErrorNotice(
+				sprintf('Error: %s (%s)', error.message, error.code),
+				{
+					'type': 'snackbar',
+					'explicitDismiss': false,
+					'context': editorType === 'classic' ? 'aiWriter' : 'global',
+				}
+			);
+		});
 	}
 
 	const getActivationCode = () => {
@@ -110,6 +171,39 @@ export const Settings = () => {
 					                    target="_blank">{__('Don\'t have an activation code yet? Click here.', 'aiwriter')}</a>
 					</p>
 					: null}
+
+				{isLoading ? <Spinner/> : null}
+			</PanelBody>
+			<PanelBody title={__('OpenAi', 'aiwriter')} initialOpen={false} onToggle={getOpenAiSecretKey}>
+				<p key="openai-api-descriptions">{__('After the free trial period, you will need a secret key from OpenAI for this plugin to work properly.', 'aiwriter')}</p>
+				{
+					openAiSecretKey === 'ENCRYPTED'
+						? <>
+							<p>
+								{__('OpenAI secret key already entered.', 'aiwriter')}
+								{' '}
+								<Button variant='link'
+								        onClick={() => setOpenAiSecretKey('')}>{__('Edit', 'aiwriter')}</Button>
+							</p>
+						</>
+						: <TextControl
+							onChange={saveOpenAiSecretKey}
+							value={openAiSecretKey === 'ENCRYPTED' ? '' : openAiSecretKey}
+							placeholder={
+								isLoading
+									? __('Loading code ...', 'aiwriter')
+									: openAiSecretKey === 'ENCRYPTED' ? __('**encrypted**', 'aiwriter') : 'abcdefghijklmnopqrstuvwxyz='
+							}
+							label={__('OpenAi API Key', 'aiwriter')} key="activation-code"
+						/>
+				}
+				{openAiSecretKey === '' && !isLoading
+					?
+					<p key="openai-api-keys"><a href="https://platform.openai.com/account/api-keys"
+					                            target="_blank">{__('Don\'t have a secret key yet? Click here.', 'aiwriter')}</a>
+					</p>
+					: null}
+				{isLoading ? <Spinner/> : null}
 			</PanelBody>
 
 			<PanelBody title={__('FAQ & Features', 'aiwriter')} initialOpen={false}>
