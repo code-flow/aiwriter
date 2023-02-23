@@ -64,10 +64,9 @@ export const Settings = () => {
 				'option_name': 'aiwriter/activation_code',
 				'aiwriter/activation_code': code
 			},
-		}).then((res) => {
+		}).then(res => {
 			setLoading(false);
-			AiWriter.activationCode = code;
-		}).catch((error) => {
+		}).catch(error => {
 			if (AiWriter.debug) console.error(error);
 			setLoading(false);
 			createErrorNotice(
@@ -120,10 +119,10 @@ export const Settings = () => {
 		apiFetch({
 			path: '/wp/v2/settings?option_name=aiwriter%2Factivation_code',
 			method: 'GET',
-		}).then((res) => {
+		}).then(res => {
 			setActivationCode(res['aiwriter/activation_code'] !== '' ? 'ENCRYPTED' : '');
 			setLoading(false);
-		}).catch((error) => {
+		}).catch(error => {
 			if (AiWriter.debug) console.error(error);
 			setLoading(false);
 			createErrorNotice(
