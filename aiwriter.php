@@ -150,12 +150,138 @@ function getApiUrl(): string {
 	return $apiUrl;
 }
 
+function getStreamUrl(): string {
+	$streamUrl = AIWRITER_STREAM_URL;
+
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'AIWRITER_DEV_STREAM_URL' ) ) {
+		$streamUrl = trailingslashit( AIWRITER_DEV_STREAM_URL );
+	}
+
+	return $streamUrl;
+}
+
+function getStreamTokenUrl(): string {
+	$url = untrailingslashit( getStreamUrl() ) . '/fetch-token';
+
+	if ( defined( 'AIWRITER_DEV_STREAM_URL' ) ) {
+		$url = add_query_arg( 'env', wp_get_environment_type(), $url );
+	}
+
+	return $url;
+}
+
+
+/**
+ * Fetches the API token.
+ *
+ * @param WP_REST_Request $request
+ *
+ * @return WP_REST_Response|WP_Error|WP_HTTP_Response
+ * @since 0.6.0
+ */
+function restGetToken( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_HTTP_Response {
+	$activationCodeEncrypted = get_option( 'aiwriter/activation_code', '' );
+
+	if ( empty( $activationCodeEncrypted ) ) {
+		return new WP_Error(
+			'ai-writer-no-license-information',
+			sprintf(
+				__( 'Hey %s, it looks like you haven\'t added your licence information yet. Enter the licence key in the settings (on the right side) and you\'re good to go.', 'aiwriter' ),
+				getCurrentUserFirstname()
+			),
+			[
+				'action'       => 'openSettings',
+				'moreMessages' => [
+					[
+						'message'   => __( 'If you don\'t have a license key, sign up for our newsletter and gain access to all features for 7 days. Our newsletter provides valuable tips on how to fully utilize the AI and subscribing will make you a pro-user with access to exclusive best-practice information.', 'aiwriter' ),
+						'buttonUrl' => 'https://aiwriter.space/7-day-trial.html'
+					]
+				],
+			]
+		);
+	}
+
+	try {
+		$activationCode = cryptoHelper( $activationCodeEncrypted, 'decrypt' );
+	} catch ( Exception $e ) {
+		return new WP_Error(
+			'ai-writer-token-rest-crypto-error',
+			sprintf( __( 'Could not decrypt your activation code. Got error: %s', 'aiwriter' ), $e->getMessage() ),
+		);
+	}
+
+
+	$response = wp_remote_post(
+		getStreamTokenUrl(),
+		[
+			'headers'     => [
+				'Authorization' => 'Bearer ' . $activationCode,
+				'Content-Type'  => 'application/json; charset=utf-8'
+			],
+			'body'        => json_encode( [ 'open_ai_secret_key' => $openAiSecretKey ] ),
+			'data_format' => 'body',
+			'timeout'     => function_exists( 'ini_get' ) ? ini_get( 'max_execution_time' ) : 30,
+		]
+	);
+
+	if ( is_wp_error( $response ) ) {
+		return $response;
+	}
+
+	/**
+	 * @var WP_HTTP_Response $response
+	 */
+	$response = $response['http_response'];
+
+	try {
+		$body = json_decode( $response->get_data(), null, 512, JSON_THROW_ON_ERROR );
+	} catch ( \Exception $e ) {
+		return new WP_Error(
+			'ai-writer-token-response-json',
+			$e->getMessage(),
+		);
+	}
+
+	if ( $response->get_status() < 200 || $response->get_status() >= 300 ) {
+
+		if ( isset( $body->data ) && isset( $body->data->message ) ) {
+			return new WP_Error(
+				'ai-writer-token-response-status-code',
+				sprintf(
+					__( 'Could not fetch token from API (wrong status code) with error: %s (%d)', 'aiwriter' ),
+					$body->data->message,
+					$body->data->code,
+				),
+				$response
+			);
+		}
+
+		return new WP_Error(
+			'ai-writer-token-response-status-code',
+			__( 'Could not fetch token from API (wrong status code).', 'aiwriter' ),
+			$response
+		);
+	}
+
+	if ( ! isset( $body->id ) ) {
+		return new WP_Error(
+			'ai-writer-token-response-token',
+			__( 'Could not fetch token from API (no string).', 'aiwriter' ),
+			$response
+		);
+	}
+
+	return rest_ensure_response( [
+		'token' => $body->id
+	] );
+}
 
 /**
  * @param WP_REST_Request $request
  *
  * @return WP_REST_Response|WP_Error|WP_HTTP_Response
  * @since 0.1.0
+ * @deprecated 0.6.0
  */
 function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_HTTP_Response {
 
@@ -262,6 +388,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
  * @since 0.1.0
  */
 function setupRestRoutes(): void {
+	# @deprecated 0.6.0
 	register_rest_route( 'wpbuddy/ai-writer/v1', 'completions', [
 		'methods'             => \WP_REST_Server::CREATABLE,
 		'callback'            => 'wpbuddy\ai_writer\restComplete',
@@ -307,6 +434,15 @@ function setupRestRoutes(): void {
 				'default'          => 1,
 			]
 		],
+	] );
+
+	register_rest_route( 'wpbuddy/ai-writer/v1', 'token', [
+		'methods'             => \WP_REST_Server::READABLE,
+		'callback'            => 'wpbuddy\ai_writer\restGetToken',
+		'permission_callback' => static function () {
+
+			return current_user_can( 'edit_posts' );
+		}
 	] );
 }
 
@@ -386,13 +522,6 @@ function enqueueBlockEditorScripts(): void {
 	}
 
 	$pluginData = get_plugin_data( __FILE__, false, false );
-	$apiUrl     = AIWRITER_API_URL;
-	$streamUrl  = AIWRITER_STREAM_URL;
-
-	if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'AIWRITER_DEV_API_URL' ) ) {
-		$apiUrl    = trailingslashit( AIWRITER_DEV_API_URL );
-		$streamUrl = 'http://127.0.0.1:8787';
-	}
 
 	$activationCodeEncrypted = get_option( 'aiwriter/activation_code', '' );
 	try {
@@ -407,8 +536,7 @@ function enqueueBlockEditorScripts(): void {
 		'startOnboarding' => ! (bool) get_user_meta( get_current_user_id(), 'aiwriter_onboardingCompleted', true ),
 		'version'         => $pluginData['Version'],
 		't'               => wp_generate_uuid4(),
-		'apiUrl'          => $apiUrl,
-		'apiStreamUrl'    => $streamUrl,
+		'apiUrl'          => getApiUrl(),
 		'temperature'     => (float) get_user_meta( get_current_user_id(), 'aiwriter_temperature', true ),
 		'textLength'      => (int) get_user_meta( get_current_user_id(), 'aiwriter_textLength', true ),
 		'upgradeUrl'      => self_admin_url( 'update-core.php?force-check=1' ),
@@ -416,7 +544,7 @@ function enqueueBlockEditorScripts(): void {
 		'userEmail'       => wp_get_current_user()->user_email,
 		'editorType'      => $screen->is_block_editor ? 'block' : 'classic',
 		'language'        => get_locale(),
-		'activationCode'  => $activationCode,
+		'env'             => wp_get_environment_type(),
 	];
 
 	if ( $screen->is_block_editor ) {
