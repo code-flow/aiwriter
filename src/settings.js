@@ -55,6 +55,8 @@ export const Settings = () => {
 	function handleSaveActionCodeDebounced(code) {
 		if (code === '') return;
 
+		const {editorType} = window.AiWriter;
+
 		setLoading(true);
 
 		apiFetch({
@@ -73,7 +75,8 @@ export const Settings = () => {
 				sprintf('Error: %s (%s)', error.message, error.code),
 				{
 					'type': 'snackbar',
-					'explicitDismiss': false
+					'explicitDismiss': false,
+					'context': editorType === 'classic' ? 'aiWriter' : 'global',
 				}
 			);
 		});
@@ -116,6 +119,7 @@ export const Settings = () => {
 	const getActivationCode = () => {
 		if (activationCode !== '') return;
 		setLoading(true);
+		const {editorType} = window.AiWriter;
 		apiFetch({
 			path: '/wp/v2/settings?option_name=aiwriter%2Factivation_code',
 			method: 'GET',
@@ -129,7 +133,8 @@ export const Settings = () => {
 				sprintf('Error: %s (%s)', error.message, error.code),
 				{
 					'type': 'snackbar',
-					'explicitDismiss': false
+					'explicitDismiss': false,
+					'context': editorType === 'classic' ? 'aiWriter' : 'global',
 				}
 			);
 		});
