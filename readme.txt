@@ -1,8 +1,8 @@
 === AiWriter: ChatGPT-like content generation ===
 Contributors:      floriansimeth
 Tags:              gpt3, chat-gpt, ai, gpt, gpt-3 content creation, content generation, content automation, openai
-Tested up to:      6.1
-Stable tag:        0.6.0
+Tested up to:      6.1.1
+Stable tag:        0.7.0
 Requires PHP:      8.0
 Requires at least: 6.0
 Donate link:       https://aiwriter.space
@@ -15,8 +15,6 @@ Unleash the Power of GPT-3 with AiWriter the same technology that is used by Cha
 
 AiWriter is a revolutionary WordPress plugin that uses AI technology (mostly powered by GPT-3) to help you write beautiful, unique texts. GPT-3 is also used by OpenAI's chatGPT and many other tools.
 With AiWriter, you don't have to worry about what to write - the plugin does it for you. Just type a few words and let AiWriter do the rest after you enter three plus signs (+++).
-
-![Adding +++ at the end of the text adds more text.](https://aiwriter.space/assets/images/aiwriter-gpt-chat.gif "AiWriter in action")
 
 AiWriter is perfect for bloggers, online entrepreneurs and anyone who wants to create high-quality content quickly and efficiently. With AiWriter, you can focus on what really matters: sharing your ideas and achieving your goals.
 
@@ -39,7 +37,7 @@ OpenAI is a leading AI research lab dedicated to ensuring that artificial intell
 
 === Important note ===
 
-Please note this is a Software-as-a-Service (SaaS) plugin. You need an [AiWriter](https://aiwriter.space) account to use this plugin. However, there is a free plan available. Simply register with the Newsetter and try AiWriter for free for 7 days.
+Please note this is a Software-as-a-Service (SaaS) plugin. You need an [AiWriter](https://aiwriter.space) account as well as an OpenAI API key to use this plugin. However, there is a free plan available. Simply [register with the Newsletter](https://aiwriter.space/7-day-trial.html) and try AiWriter for free for 7 days.
 
 == Installation ==
 
@@ -57,7 +55,7 @@ Yes, it can be used with the classic editor as well. However, we recommend using
 
 === How to get an activation key? ===
 
-Purchase a licence from [AiWriter] (https://aiwriter.space). A free 7-day trial is available when you sign up for the newsletter.
+Purchase a licence from [AiWriter](https://aiwriter.space). A free 7-day trial is available when you [sign up for the newsletter](https://aiwriter.space/7-day-trial.html).
 
 === How to get started? ===
 
@@ -66,6 +64,7 @@ Purchase a licence from [AiWriter] (https://aiwriter.space). A free 7-day trial 
 3. In the block editor, the settings can be found under the new "AI" icon that appears in the top right corner.
 4. In the classic editor, the settings can be found under the "AiWriter" metabox, which should appear on the right-hand side.
 5. Enter your activation key and click "Save".
+6. If you're on a paid plan, enter your OpenAI API in the 'OpenAI' panel.
 
 === More questions? ===
 
