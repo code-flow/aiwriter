@@ -14,3 +14,4 @@ global $wpdb;
 $wpdb->delete( $wpdb->usermeta, [ 'meta_key' => 'aiwriter_isActive' ] );
 $wpdb->delete( $wpdb->usermeta, [ 'meta_key' => 'aiwriter_temperature' ] );
 $wpdb->delete( $wpdb->usermeta, [ 'meta_key' => 'aiwriter_textLength' ] );
+$wpdb->delete( $wpdb->usermeta, [ 'meta_key' => 'aiwriter_onboardingCompleted' ] );
