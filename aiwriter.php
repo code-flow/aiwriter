@@ -279,6 +279,18 @@ function restGetToken( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 			);
 		}
 
+		if ( isset( $body->code, $body->message ) ) {
+			return new WP_Error(
+				'ai-writer-token-response-status-code',
+				sprintf(
+					__( 'Could not fetch token from API. Got error: %s (%d)', 'aiwriter' ),
+					$body->message,
+					$body->code,
+				),
+				$response
+			);
+		}
+
 		return new WP_Error(
 			'ai-writer-token-response-status-code',
 			__( 'Could not fetch token from API (wrong status code).', 'aiwriter' ),
