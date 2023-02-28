@@ -2,7 +2,7 @@
 Contributors:      floriansimeth
 Tags:              gpt3, chat-gpt, ai, gpt, gpt-3 content creation, content generation, content automation, openai
 Tested up to:      6.1.1
-Stable tag:        0.7.1
+Stable tag:        0.7.2
 Requires PHP:      8.0
 Requires at least: 6.0
 Donate link:       https://aiwriter.space
