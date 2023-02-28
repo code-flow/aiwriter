@@ -558,13 +558,6 @@ function enqueueBlockEditorScripts(): void {
 
 	$pluginData = get_plugin_data( __FILE__, false, false );
 
-	$activationCodeEncrypted = get_option( 'aiwriter/activation_code', '' );
-	try {
-		$activationCode = cryptoHelper( $activationCodeEncrypted, 'decrypt' );
-	} catch ( Exception $e ) {
-		$activationCode = '';
-	}
-
 	$data = (object) [
 		'debug'           => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
 		'isActive'        => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
