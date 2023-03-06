@@ -70,7 +70,7 @@ export const TextGenerationSettings = () => {
 					updateUserMetaDebounced('temperature', value);
 				}}
 				min={0}
-				max={1}
+				max={2}
 				step={.1}
 				withInputField={false}
 				renderTooltipContent={value => {
