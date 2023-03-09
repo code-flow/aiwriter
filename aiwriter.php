@@ -816,13 +816,14 @@ function classicEditorMetaBoxSettings(): void {
 	echo '<div id="aiWriterSettings"></div>';
 }
 
-add_action( 'edit_form_after_editor', 'wpbuddy\ai_writer\adminPostsFooter' );
+add_action( 'edit_form_after_editor', 'wpbuddy\ai_writer\adminPostsFooterClassicEditor' );
 
 /**
  * @return void
  * @since 0.4.0
+ * @since 0.8.0 Renamed from `adminPostsFooter`
  */
-function adminPostsFooter(): void {
+function adminPostsFooterClassicEditor(): void {
 	echo '<div id="aiWriterNotices"></div>';
 }
 
