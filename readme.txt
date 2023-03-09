@@ -2,14 +2,14 @@
 Contributors:      floriansimeth
 Tags:              ai content creation, content generation, content automation, ai plugin, ai, gpt3, chat-gpt, gpt, gpt-3
 Tested up to:      6.1.1
-Stable tag:        0.7.2
+Stable tag:        0.8.0
 Requires PHP:      8.0
 Requires at least: 6.0
 Donate link:       https://aiwriter.space
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Unleash the Power of GPT-3 with AiWriter the same technology that is used by ChatGPT.
+Streamline your content creation with AI-powered writing: The Ultimate AiWriter WordPress Plugin for Bloggers and Writers.
 
 == Description ==
 
