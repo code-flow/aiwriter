@@ -522,6 +522,23 @@ function registerScripts(): void {
 		[ 'wp-components' ],
 		$assetClassicEditor['version']
 	);
+
+	$assetsChatWindow = include __DIR__ . '/build/chatWindow.asset.php';
+
+	wp_register_script(
+		'ai-writer-chat-window',
+		plugins_url( '/build/chatWindow.js', __FILE__ ),
+		$assetsChatWindow['dependencies'],
+		$assetsChatWindow['version'],
+		true
+	);
+
+	wp_register_style(
+		'ai-writer-chat-window',
+		plugins_url( '/build/chatWindow.css', __FILE__ ),
+		[],
+		$assetsChatWindow['version']
+	);
 }
 
 add_action( 'admin_enqueue_scripts', 'wpbuddy\ai_writer\enqueueBlockEditorScripts' );
@@ -589,6 +606,9 @@ function enqueueBlockEditorScripts(): void {
 		),
 		'before'
 	);
+
+	wp_enqueue_script( 'ai-writer-chat-window' );
+	wp_enqueue_style( 'ai-writer-chat-window' );
 }
 
 /**
@@ -839,4 +859,16 @@ function classicEditorTinyMceScripts(): void {
 		}, true);
 	</script>
 	<?php
+}
+
+
+add_action( 'admin_footer-post-new.php', 'wpbuddy\ai_writer\adminPostsFooter' );
+add_action( 'admin_footer-post.php', 'wpbuddy\ai_writer\adminPostsFooter' );
+
+/**
+ * @return void
+ * @since 0.8.0
+ */
+function adminPostsFooter(): void {
+	echo '<div id="aiWriterChat"></div>';
 }

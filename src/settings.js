@@ -13,6 +13,7 @@ import {TextGenerationSettings} from "./text-generation-settings";
 
 export const Settings = () => {
 	let {AiWriter} = window;
+	const {events} = AiWriter;
 	const [isLoading, setLoading] = useState(false);
 
 	const [activationCode, setActivationCode] = useState('');
@@ -143,6 +144,11 @@ export const Settings = () => {
 	return (
 		<>
 			<TextGenerationSettings/>
+			<PanelBody title={__('Ai Chat', 'aiwriter')} initialOpen={true}>
+				<Button icon="format-chat" variant="primary" onClick={() => {
+					events.dispatch('aiWriter.chatOpen', true);
+				}}>{__('Start Ai Chat', 'aiwriter')}</Button>
+			</PanelBody>
 			<PanelBody title={__('Your subscription', 'aiwriter')} initialOpen={false}
 			           onToggle={getActivationCode}>
 				{

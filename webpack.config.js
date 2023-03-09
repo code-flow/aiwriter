@@ -9,6 +9,7 @@ module.exports = {
 	entry: {
 		...getWebpackEntryPoints(),
 		blockEditor: './src/block-editor.js',
-		classicEditor: './src/classic-editor.js'
+		classicEditor: './src/classic-editor.js',
+		chatWindow: './src/chat-window.js',
 	}
 }
