@@ -1,6 +1,6 @@
-=== AiWriter: ChatGPT-like content generation ===
+=== AiWriter: Ai Content Generation ===
 Contributors:      floriansimeth
-Tags:              ai content creation, content generation, content automation, ai plugin, openai, gpt3, chat-gpt, ai, gpt, gpt-3
+Tags:              ai content creation, content generation, content automation, ai plugin, ai, gpt3, chat-gpt, gpt, gpt-3
 Tested up to:      6.1.1
 Stable tag:        0.7.2
 Requires PHP:      8.0
@@ -13,31 +13,33 @@ Unleash the Power of GPT-3 with AiWriter the same technology that is used by Cha
 
 == Description ==
 
-AiWriter is a revolutionary WordPress plugin that uses AI technology (mostly powered by GPT-3) to help you write beautiful, unique texts. GPT-3 is also used by OpenAI's chatGPT and many other tools.
-With AiWriter, you don't have to worry about what to write - the plugin does it for you. Just type a few words and let AiWriter do the rest after you enter three plus signs (+++).
+Hey there 👋, welcome to AiWriter - the ultimate AI-powered WordPress plugin for all the bloggers, writers and copywriters out there!
 
-AiWriter is perfect for bloggers, online entrepreneurs and anyone who wants to create high-quality content quickly and efficiently. With AiWriter, you can focus on what really matters: sharing your ideas and achieving your goals.
+If you're someone who wants to write high-quality, engaging content without spending hours brainstorming and researching, then AiWriter is perfect for you. Our AI technology does all the heavy lifting of content creation, leaving you more time to focus on the creative process.
 
-Try AiWriter now and see for yourself how easy and powerful writing content can be!
+=== Ai Content Generation ===
 
-=== Generate Content ===
+With AiWriter, you can create unique, SEO-optimised content quickly and efficiently. All you have to do is type '+++' and let the magic happen! Our advanced ChatGPT language model is there to help you create content that is not only unique, but also engaging and informative.
 
-- Simply type +++ and AiWriter will add more text to your content.
-- OpenAI's Completions API, powered by the advanced ChatGPT language model, unlocks the full potential of conversational AI.
-- Enhance WordPress with the unmatched accuracy and efficiency of ChatGPT's natural language processing capabilities.
-- Experience a new level of language understanding at your fingertips.
+Whether you're a blogger, writer or copywriter, AiWriter is an indispensable tool that can help you streamline your workflow, save time and improve the quality of your work. Our AI for content creation capabilities help you create content that is uniquely tailored to your needs and style.
 
-=== AI is awesome! ===
+So what are you waiting for? Install AiWriter today and unlock the power of AI content writing in WordPress. With our plugin, you can take your content creation to the next level and produce high-quality, engaging content that your readers will love. Trust us, once you try AiWriter, you'll never go back to your old ways of creating content!
 
-I think it's totally cool what you can do with AI now. My aim is to make the interfaces offered to a developer as simple as possible for WordPress users, while at the same time producing the fastest possible results. I hope you enjoy using AiWriter as much as I enjoyed developing it. - Florian
+=== The AI for Content Creation ===
 
-=== Open AI ===
+AiWriter is powered by Chat-GPT, an advanced AI language model that uses natural language processing to generate content. Chat-GPT is a state-of-the-art AI model that can generate content that is not only unique, but also engaging and informative. With our AI-powered content creation capabilities, you can create content that is uniquely tailored to your needs and style.
 
-OpenAI is a leading AI research lab dedicated to ensuring that artificial intelligence has a positive impact on humanity. Using cutting-edge technology and deep learning algorithms, OpenAI pushes the boundaries of what's possible in AI. Whether it's developing advanced language models like GPT-3 or creating new tools and platforms, OpenAI is at the forefront of the AI revolution, shaping the future of technology and innovation.
+=== Do your research right in WordPress ===
+
+Great news! As of version 0.8.0, we've integrated Chat-GPT into AiWriter, making it even more powerful and versatile. With this integration, you can now conduct comprehensive research and write content that is both informative and engaging right from within WordPress.
+
+By using Chat-GPT, you can take advantage of AI-powered natural language processing to gain valuable insights and inspiration for your content. Whether you need to research a specific topic or find related keywords, Chat-GPT has you covered. With this integration, you can now access Chat-GPT directly from AiWriter, streamlining the process of creating high-quality content.
+
+So if you're looking for a tool to help you create content that's not only unique, but also informative, then AiWriter is the perfect choice. With our latest update, you can now harness the power of Chat-GPT right inside WordPress and take your content creation to the next level.
 
 === Important note ===
 
-Please note this is a Software-as-a-Service (SaaS) plugin. You need an [AiWriter](https://aiwriter.space) account as well as an OpenAI API key to use this plugin. However, there is a free plan available. Simply [register with the Newsletter](https://aiwriter.space/7-day-trial.html) and try AiWriter for free for 7 days.
+Please note this is a Software-as-a-Service (SaaS) plugin. You need an [AiWriter](https://aiwriter.space) account as well as an OpenAI API key to use this plugin. However, there is a free plan available. Simply [register with the Newsletter](https://aiwriter.space/7-day-trial.html) and try AiWriter for free for 7 days (without an OpenAi API key). Easy!
 
 == Installation ==
 
@@ -51,7 +53,7 @@ Yes, it does. AiWriter is a block plugin and works with the new block editor.
 
 === Does it work with Classic Editor? ===
 
-Yes, it can be used with the classic editor as well. However, we recommend using the block editor.
+Yes, it can be used with the Classic Editor as well. However, we recommend using the block editor.
 
 === How to get an activation key? ===
 
