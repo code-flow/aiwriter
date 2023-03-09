@@ -1,6 +1,6 @@
 === AiWriter: ChatGPT-like content generation ===
 Contributors:      floriansimeth
-Tags:              gpt3, chat-gpt, ai, gpt, gpt-3 content creation, content generation, content automation, openai
+Tags:              ai content creation, content generation, content automation, ai plugin, openai, gpt3, chat-gpt, ai, gpt, gpt-3
 Tested up to:      6.1.1
 Stable tag:        0.7.2
 Requires PHP:      8.0
