@@ -1,10 +1,10 @@
 === AiWriter: Ai Content Generation ===
 Contributors:      floriansimeth
 Tags:              ai content creation, content generation, content automation, ai plugin, ai, gpt3, chat-gpt, gpt, gpt-3
-Tested up to:      6.1.1
+Tested up to:      6.2
 Stable tag:        0.8.1
 Requires PHP:      8.0
-Requires at least: 6.0
+Requires at least: 6.2
 Donate link:       https://aiwriter.space
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       AiWriter
  * Description:       When the AI completes your sentence... Register at https://aiwriter.space to use this plugin! Thanks.
- * Requires at least: 6.0.0
+ * Requires at least: 6.2
  * Requires PHP:      8.0.0
  * Version:           0.8.1
  * Author:            floriansimeth
