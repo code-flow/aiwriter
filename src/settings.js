@@ -1,5 +1,5 @@
 import {__} from '@wordpress/i18n';
-import {Button, Spinner} from '@wordpress/components';
+import {Button, Spinner, FormToggle} from '@wordpress/components';
 import debounce from 'lodash/debounce';
 import {useState} from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
@@ -15,6 +15,7 @@ export const Settings = () => {
 	let {AiWriter} = window;
 	const {events} = AiWriter;
 	const [isLoading, setLoading] = useState(false);
+	const [isBlockAiActive, setIsBlockAiActive] = useState(AiWriter.isBlockAiActive);
 
 	const [activationCode, setActivationCode] = useState('');
 	const [openAiSecretKey, setOpenAiSecretKey] = useState('');
@@ -141,6 +142,32 @@ export const Settings = () => {
 		});
 	}
 
+	const updateUserMeta = (field, value) => {
+		let meta = {};
+		meta['aiwriter_' + field] = value;
+		setLoading(true);
+		apiFetch({
+			path: '/wp/v2/users/me/',
+			method: 'POST',
+			data: {
+				'meta': meta,
+			},
+		}).then((res) => {
+			AiWriter[field] = value;
+			setLoading(false);
+		}).catch((error) => {
+			if (AiWriter.debug) console.error(error);
+			setLoading(false);
+			createErrorNotice(
+				sprintf('Error: %s (%s)', error.message, error.code),
+				{
+					'type': 'snackbar',
+					'explicitDismiss': false
+				}
+			);
+		});
+	}
+
 	return (
 		<>
 			<TextGenerationSettings/>
@@ -148,6 +175,20 @@ export const Settings = () => {
 				<Button icon="format-chat" variant="primary" onClick={() => {
 					events.dispatch('aiWriter.chatOpen', true);
 				}}>{__('Start Ai Chat', 'aiwriter')}</Button>
+			</PanelBody>
+			<PanelBody title={__('Block Ai', 'aiwriter')} initialOpen={false}>
+				<p>
+					<FormToggle
+						checked={isBlockAiActive}
+						onChange={e => {
+							setIsBlockAiActive(e.target.checked);
+							AiWriter.isBlockAiActive = e.target.checked;
+							updateUserMeta('isActive', e.target.checked);
+						}}
+					/>
+					{' '}
+					{__('Activate BlockAi functionality', 'aiwriter')}
+				</p>
 			</PanelBody>
 			<PanelBody title={__('Your subscription', 'aiwriter')} initialOpen={false}
 			           onToggle={getActivationCode}>

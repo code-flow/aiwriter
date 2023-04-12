@@ -80,6 +80,24 @@ function registerSettings(): void {
 
 	register_meta(
 		'user',
+		'aiwriter_isBlockAiActive',
+		[
+			'type'              => 'boolean',
+			'description'       => __( 'If Block Ai functionality is active for this user.', 'aiwriter' ),
+			'single'            => true,
+			'default'           => false,
+			'show_in_rest'      => true,
+			'sanitize_callback' => static function ( $val ) {
+				return (bool) $val;
+			},
+			'auth_callback'     => static function ( $allowed, $meta_key, $object_id, $user_id, $cap, $caps ) {
+				return is_user_logged_in() && get_current_user_id() === $user_id;
+			},
+		]
+	);
+
+	register_meta(
+		'user',
 		'aiwriter_onboardingCompleted',
 		[
 			'type'              => 'boolean',
@@ -579,6 +597,7 @@ function enqueueBlockEditorScripts(): void {
 	$data = (object) [
 		'debug'           => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
 		'isActive'        => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
+		'isBlockAiActive' => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isBlockAiActive', false ),
 		'startOnboarding' => ! (bool) get_user_meta( get_current_user_id(), 'aiwriter_onboardingCompleted', true ),
 		'version'         => $pluginData['Version'],
 		't'               => wp_generate_uuid4(),
