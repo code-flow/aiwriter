@@ -1,13 +1,13 @@
 import debounce from 'lodash/debounce';
 import {__} from '@wordpress/i18n';
-import {RangeControl} from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import {useState} from '@wordpress/element';
 import {useDispatch} from '@wordpress/data';
 import {store as noticesStore} from '@wordpress/notices';
 import {
 	PanelBody,
-	FormToggle
+	FormToggle,
+	RangeControl
 } from '@wordpress/components';
 
 
