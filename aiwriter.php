@@ -840,6 +840,10 @@ add_action( 'after_wp_tiny_mce', 'wpbuddy\ai_writer\classicEditorTinyMceScripts'
  * @since 0.4.0
  */
 function classicEditorTinyMceScripts(): void {
+	if ( ! function_exists( 'get_current_screen' ) ) {
+		return;
+	}
+
 	$screen = get_current_screen();
 
 	if ( ! $screen instanceof \WP_Screen ) {
