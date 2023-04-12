@@ -1,7 +1,7 @@
 import React from 'react';
-import * as ReactDOM from 'react-dom';
 import {Settings} from "./settings";
 import {Notices} from "./notices";
+import {createRoot} from "@wordpress/element";
 
 // do not uncomment the next lines as it is needed by our AiWriter.js file
 import {dispatch, select} from '@wordpress/data';
@@ -12,5 +12,7 @@ import apiFetch from '@wordpress/api-fetch';
 import './loader.scss';
 import './classic-editor.scss';
 
-ReactDOM.render(<Settings/>, document.getElementById('aiWriterSettings'));
-ReactDOM.render(<Notices/>, document.getElementById('aiWriterNotices'));
+if (createRoot) {
+	createRoot(document.getElementById('aiWriterSettings')).render(<Settings/>);
+	createRoot(document.getElementById('aiWriterNotices')).render(<Notices/>);
+}
