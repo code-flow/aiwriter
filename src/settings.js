@@ -187,7 +187,7 @@ export const Settings = () => {
 						}}
 					/>
 					{' '}
-					{__('Activate BlockAi functionality', 'aiwriter')}
+					{__('Activate BlockAi (Exprimental)', 'aiwriter')}
 				</p>
 			</PanelBody>
 			<PanelBody title={__('Your subscription', 'aiwriter')} initialOpen={false}
