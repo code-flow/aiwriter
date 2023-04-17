@@ -13,6 +13,8 @@ import './loader.scss';
 import './classic-editor.scss';
 
 if (createRoot) {
-	createRoot(document.getElementById('aiWriterSettings')).render(<Settings/>);
-	createRoot(document.getElementById('aiWriterNotices')).render(<Notices/>);
+	const settings = document.getElementById('aiWriterSettings');
+	if (settings) createRoot(settings).render(<Settings/>);
+	const notices = document.getElementById('aiWriterNotices');
+	if (notices) createRoot(notices).render(<Notices/>);
 }
