@@ -11,6 +11,8 @@ import {addFilter} from '@wordpress/hooks';
 import {createHigherOrderComponent} from '@wordpress/compose';
 import {PanelBody, TextControl} from '@wordpress/components';
 import {Fragment, useState} from '@wordpress/element';
+import {compose} from '@wordpress/compose';
+import {useBlockProps, InnerBlocks} from '@wordpress/block-editor';
 // end dependencies
 
 const AiWriter = window.AiWriter;
@@ -30,3 +32,4 @@ registerPlugin('aiwriter', {
 
 	document.body.appendChild(el);
 })();
+
