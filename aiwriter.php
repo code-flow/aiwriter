@@ -597,7 +597,7 @@ function enqueueBlockEditorScripts(): void {
 	$data = (object) [
 		'debug'           => defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG,
 		'isActive'        => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isActive', true ),
-		'isBlockAiActive' => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isBlockAiActive', false ),
+		'isBlockAiActive' => (bool) get_user_meta( get_current_user_id(), 'aiwriter_isBlockAiActive', true ),
 		'startOnboarding' => ! (bool) get_user_meta( get_current_user_id(), 'aiwriter_onboardingCompleted', true ),
 		'version'         => $pluginData['Version'],
 		't'               => wp_generate_uuid4(),
