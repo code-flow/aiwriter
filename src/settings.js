@@ -10,6 +10,7 @@ import {
 	TextControl
 } from '@wordpress/components';
 import {TextGenerationSettings} from "./text-generation-settings";
+import {TitleSuggestionSettings} from "./title-suggestion-settings";
 
 export const Settings = () => {
 	let {AiWriter} = window;
@@ -170,6 +171,7 @@ export const Settings = () => {
 
 	return (
 		<>
+			<TitleSuggestionSettings/>
 			<TextGenerationSettings/>
 			<PanelBody title={__('Ai Chat', 'aiwriter')} initialOpen={true}>
 				<Button icon="format-chat" variant="primary" onClick={() => {
@@ -183,11 +185,11 @@ export const Settings = () => {
 						onChange={e => {
 							setIsBlockAiActive(e.target.checked);
 							AiWriter.isBlockAiActive = e.target.checked;
-							updateUserMeta('isActive', e.target.checked);
+							updateUserMeta('isBlockAiActive', e.target.checked);
 						}}
 					/>
 					{' '}
-					{__('Activate BlockAi (Exprimental)', 'aiwriter')}
+					{__('Activate BlockAi (Experimental)', 'aiwriter')}
 				</p>
 			</PanelBody>
 			<PanelBody title={__('Your subscription', 'aiwriter')} initialOpen={false}
