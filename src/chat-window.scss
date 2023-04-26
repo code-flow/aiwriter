@@ -60,6 +60,25 @@
 	  justify-content: space-between;
 	  padding: 1rem;
 	  border-left: 2px solid transparent;
+	  font-size: .9rem;
+	  line-height: 1.3rem;
+
+	  pre {
+		background-color: #000;
+		color: #fff;
+	  }
+
+	  table,
+	  table td,
+	  table th {
+		border: 1px solid black;
+		padding: .5em;
+	  }
+
+	  table {
+		border-collapse: collapse;
+		margin: .5em 0;
+	  }
 
 	  p {
 		margin: 0;
@@ -67,7 +86,7 @@
 	  }
 
 	  div {
-		flex: 0 0 auto;
+		flex: 0 1 auto;
 		margin-left: 1rem;
 	  }
 
