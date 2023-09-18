@@ -192,7 +192,7 @@ export const Settings = () => {
 					{__('Activate BlockAi (Experimental)', 'aiwriter')}
 				</p>
 			</PanelBody>
-			<PanelBody title={__('Your subscription', 'aiwriter')} initialOpen={false}
+			<PanelBody title={__('Your license', 'aiwriter')} initialOpen={false}
 			           onToggle={getActivationCode}>
 				{
 					activationCode === 'ENCRYPTED'
