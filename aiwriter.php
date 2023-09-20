@@ -389,7 +389,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 	}
 
 	$body = [
-		'model'             => "text-davinci-003",
+		'model'             => "gpt-3.5-turbo-instruct",
 		'prompt'            => $request->get_param( 'prompt' ),
 		'temperature'       => (float) $request->get_param( 'temperature' ),
 		'max_tokens'        => (int) $request->get_param( 'max_tokens' ),
