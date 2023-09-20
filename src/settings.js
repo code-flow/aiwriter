@@ -37,7 +37,7 @@ export const Settings = () => {
 			method: 'POST',
 			data: {
 				'option_name': 'aiwriter/openai_secret_key',
-				'aiwriter/openai_secret_key': code
+				'aiwriter/openai_secret_key': key
 			},
 		}).then(res => {
 			setLoading(false);
