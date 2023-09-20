@@ -203,8 +203,6 @@ export const Settings = () => {
 								<Button variant='link'
 								        onClick={() => setActivationCode('')}>{__('Edit', 'aiwriter')}</Button>
 							</p>
-							<p><a href="https://billing.aiwriter.space/p/login/aEU4jGfC87qg7NSaEE"
-							      target="_blank">{__('Manage your subscription', 'aiwriter')}</a></p>
 						</>
 						: <TextControl
 							onChange={saveActivationCode}
@@ -226,6 +224,9 @@ export const Settings = () => {
 					: null}
 
 				{isLoading ? <Spinner/> : null}
+
+				<p><a href="https://wp-buddy.com/blog/where-to-find-your-envato-purchase-code/"
+				      target="_blank">{__('Where to find your Envato purchase code', 'aiwriter')}</a></p>
 			</PanelBody>
 			<PanelBody title={__('OpenAi', 'aiwriter')} initialOpen={false} onToggle={getOpenAiSecretKey}>
 				<p key="openai-api-descriptions">{__('After the free trial period, you will need a secret key from OpenAI for this plugin to work properly.', 'aiwriter')}</p>

@@ -235,7 +235,7 @@ function restGetToken( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 		return new WP_Error(
 			'ai-writer-no-license-information',
 			sprintf(
-				__( 'Hey %s, it looks like you haven\'t added your licence information yet. Enter the licence key in the settings (on the right side) and you\'re good to go.', 'aiwriter' ),
+				__( 'Hey %s, it looks like you haven\'t added your licence information yet. Enter the licence key / purchase code in the settings (on the right side) and you\'re good to go.', 'aiwriter' ),
 				getCurrentUserFirstname()
 			),
 			[
@@ -366,7 +366,7 @@ function restComplete( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 		return new WP_Error(
 			'ai-writer-no-license-information',
 			sprintf(
-				__( 'Hey %s, it looks like you haven\'t added your licence information yet. Enter the licence key in the settings (on the right side) and you\'re good to go.', 'aiwriter' ),
+				__( 'Hey %s, it looks like you haven\'t added your licence information yet. Enter the licence key / purchase code in the settings (on the right side) and you\'re good to go.', 'aiwriter' ),
 				getCurrentUserFirstname()
 			),
 			[
