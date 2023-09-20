@@ -38,12 +38,26 @@ add_action( 'init', 'wpbuddy\ai_writer\registerSettings' );
  * @since 0.1.0
  */
 function registerSettings(): void {
+
+	$cryptoHelper = static function ( $value ) {
+		static $cryptoValue = null;
+
+		# avoid double encryption
+		if ( is_string( $cryptoValue ) ) {
+			return $cryptoValue;
+		}
+
+		$cryptoValue = cryptoHelper( $value );
+
+		return $cryptoValue;
+	};
+
 	register_setting(
 		'options',
 		'aiwriter/activation_code',
 		[
 			'type'              => 'string',
-			'sanitize_callback' => '\wpbuddy\ai_writer\cryptoHelper',
+			'sanitize_callback' => $cryptoHelper,
 			'show_in_rest'      => true,
 			'default'           => ''
 		]
@@ -54,7 +68,7 @@ function registerSettings(): void {
 		'aiwriter/openai_secret_key',
 		[
 			'type'              => 'string',
-			'sanitize_callback' => '\wpbuddy\ai_writer\cryptoHelper',
+			'sanitize_callback' => $cryptoHelper,
 			'show_in_rest'      => true,
 			'default'           => ''
 		]
