@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       AiWriter
- * Description:       When the AI completes your sentence... Register at https://aiwriter.space to use this plugin! Thanks.
+ * Description:       Automatic WordPress AI Writer, Copywriting Assistant & Content Repurposer
  * Requires at least: 6.2
  * Requires PHP:      8.0.0
  * Version:           0.9.0
