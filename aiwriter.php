@@ -270,6 +270,8 @@ function restGetToken( WP_REST_Request $request ): WP_REST_Response|WP_Error|WP_
 				sprintf( __( 'Could not decrypt your Open AI Secret Key code. Got error: %s', 'aiwriter' ), $e->getMessage() ),
 			);
 		}
+	} else {
+		$openAiSecretKey = '';
 	}
 
 	$response = wp_remote_post(
