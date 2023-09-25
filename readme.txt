@@ -1,8 +1,8 @@
 === AiWriter: Automatic WordPress AI Writer, Copywriting Assistant & Content Repurposer / OpenAI GPT ===
 Contributors:      floriansimeth
 Tags:              automatic ai writer, copywriting assistant, content creation, content repurposer, content automation, ai plugin, ai, gpt3, chat-gpt, gpt, gpt-3
-Tested up to:      6.2
-Stable tag:        0.9.0
+Tested up to:      6.3.1
+Stable tag:        0.10.0
 Requires PHP:      8.0
 Requires at least: 6.2
 Donate link:       https://aiwriter.space
