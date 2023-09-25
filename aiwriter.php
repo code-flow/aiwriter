@@ -22,7 +22,7 @@ use WP_HTTP_Response;
 use WP_REST_Request;
 use WP_REST_Response;
 
-define( 'AIWRITER_API_URL', 'https://aiwriter.space/api/' );
+define( 'AIWRITER_API_URL', 'https://api.aiwriter.space/api/' );
 define( 'AIWRITER_STREAM_URL', 'https://stream.aiwriter.workers.dev' );
 
 add_action( 'init', 'wpbuddy\ai_writer\loadTranslation' );
