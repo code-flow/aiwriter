@@ -628,6 +628,14 @@ function enqueueBlockEditorScripts(): void {
 		'env'             => wp_get_environment_type(),
 	];
 
+	if ( str_contains( site_url(), 'https://playground.wordpress.net' ) ) {
+		try {
+			$openAiSecretKeyEncrypted = trim( get_option( 'aiwriter/openai_secret_key', '' ) );
+			$data->openAiSecretKey    = cryptoHelper( $openAiSecretKeyEncrypted, 'decrypt' );
+		} catch ( Exception $e ) {
+		}
+	}
+
 	if ( $screen->is_block_editor ) {
 		$editor = 'block';
 	} else {

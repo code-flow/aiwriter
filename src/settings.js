@@ -86,7 +86,15 @@ export const Settings = () => {
 	}
 
 	function saveOpenAiSecretKey(key) {
+		const {nonceEndpoint} = apiFetch;
+
 		setOpenAiSecretKey(key);
+
+		const isPlayground = nonceEndpoint.indexOf('https://playground.wordpress.net') !== -1;
+		if (isPlayground) {
+			window.AiWriter.openAiSecretKey = key;
+		}
+
 		saveOpenAiSecretKeyDebounced(key);
 	}
 
