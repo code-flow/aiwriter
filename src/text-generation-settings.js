@@ -98,24 +98,24 @@ export const TextGenerationSettings = () => {
 					setTextLength(value);
 					updateUserMetaDebounced('textLength', value);
 				}}
-				min={200}
+				min={100}
 				max={1000}
 				showTooltip={false}
 				marks={[
 					{
-						value: 200,
+						value: 100,
 						label: __('Little', 'aiwriter'),
 					},
 					{
-						value: 400,
+						value: 200,
 						label: __('Medium', 'aiwriter'),
 					},
 					{
-						value: 600,
+						value: 400,
 						label: __('Long', 'aiwriter'),
 					},
 					{
-						value: 800,
+						value: 600,
 						label: __('Very long', 'aiwriter'),
 					},
 					{
@@ -123,7 +123,7 @@ export const TextGenerationSettings = () => {
 						label: __('Maximum', 'aiwriter'),
 					},
 				]}
-				step={200}
+				step={100}
 				withInputField={false}
 			/>
 		</PanelBody>
