@@ -1,5 +1,8 @@
 # What is AiWriter?
 
+> [!CAUTION]
+> This repository / WordPress plugin will no longer be actively maintained after December 2023.
+
 ## Boost Your Content Creation with AI-Powered Writing: The Ultimate AiWriter Plugin for WordPress Bloggers and Writers.
 
 Hello 👋, welcome to AiWriter - the ultimate AI-powered WordPress plugin for bloggers, writers and copywriters! If you're
